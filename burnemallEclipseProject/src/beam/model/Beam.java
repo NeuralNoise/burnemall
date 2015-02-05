@@ -1,8 +1,8 @@
 package beam.model;
 
-import math.geom2d.Point2D;
-import math.geom2d.line.LineSegment2D;
-import math.geom2d.line.Ray2D;
+import geometry.Point2D;
+import geometry.Ray2D;
+import geometry.Segment2D;
 
 public class Beam {
 
@@ -43,11 +43,11 @@ public class Beam {
 		return color;
 	}
 
-	public LineSegment2D getSegment() {
+	public Segment2D getSegment() {
 		if (endPoint==null)
-			return new LineSegment2D(ray.firstPoint(), ray.point(FAR));
+			return new Segment2D(ray.getStart(), ray.getPointAt(FAR));
 		else
-			return new LineSegment2D(ray.firstPoint(), endPoint);
+			return new Segment2D(ray.getStart(), endPoint);
 	}
 
 	public double getWidth() {

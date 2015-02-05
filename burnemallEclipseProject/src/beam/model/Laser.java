@@ -5,9 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import math.geom2d.Point2D;
-import math.geom2d.line.LineSegment2D;
-
 public class Laser {
 
 	List<Beam> beams = new ArrayList<>();

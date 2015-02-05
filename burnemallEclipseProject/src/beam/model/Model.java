@@ -1,13 +1,13 @@
 package beam.model;
 
+import geometry.Point2D;
+
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import math.geom2d.Point2D;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
@@ -70,7 +70,7 @@ public class Model {
 				for (Item item : items) {
 					Point2D intersect = item.intersect(activeBeam.ray);
 					if (intersect!=null) { 
-						double dist = intersect.distance(activeBeam.ray.firstPoint());
+						double dist = intersect.getDistance(activeBeam.ray.getStart());
 						// check minimal distance to avoid infinite intersection with last object
 						// the solution is not very good, we should check objects list instead
 						if (dist>MIN_AUTO_HIT_DISTANCE && dist<nearestDist) {
@@ -127,9 +127,9 @@ public class Model {
 	public Item getNearestItemFromModelSpace(java.awt.geom.Point2D point) {
 		Item res = null;
 		double minDist = Double.MAX_VALUE;
-		Point2D mouse = new Point2D(point);
+		Point2D mouse = new Point2D(point.getX(), point.getY());
 		for (Item m : items) {
-			double dist = mouse.distance(m.getCenter());
+			double dist = mouse.getDistance(m.getCenter());
 			if (dist<minDist) {
 				minDist = dist;
 				res = m;

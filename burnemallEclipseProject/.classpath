@@ -8,7 +8,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/burnemallEclipseProject/lib/simple-xml-2.7.1/javadoc/deprecated-list.html!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/javaGeom-0.11.2.jar"/>
 	<classpathentry kind="lib" path="lib/miglayout-4.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
