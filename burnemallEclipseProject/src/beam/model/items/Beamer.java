@@ -1,5 +1,9 @@
 package beam.model.items;
 
+import geometry.Point2D;
+import geometry.Ray2D;
+import geometry.Transform2D;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -8,15 +12,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import math.geom2d.AffineTransform2D;
-import math.geom2d.Point2D;
-import math.geom2d.line.Ray2D;
-import math.geom2d.polygon.Polyline2D;
-
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import collections.Polyline2D;
 import beam.model.Beam;
 import beam.model.MyColor;
 
@@ -26,7 +26,7 @@ public class Beamer extends Item {
 	private static final int LENGTH=20;
 	private static final int WIDTH=10;
 	
-	private Polyline2D pl;
+	public Polyline2D pl;
 	
 	@Element(required=false)
 	private MyColor color = MyColor.get("#63CAEB");
@@ -58,21 +58,14 @@ public class Beamer extends Item {
 	@Override
 	void update() {
 		Polyline2D pl = new Polyline2D();
-		pl.addVertex(new Point2D(0, 0));
-		pl.addVertex(new Point2D(-LENGTH, WIDTH/2));
-		pl.addVertex(new Point2D(-LENGTH, -WIDTH/2));
-		pl.addVertex(new Point2D(0, 0));
-		AffineTransform2D at = AffineTransform2D.createRotation(angle).chain(AffineTransform2D.createTranslation(center.x(), center.y()));;
-		this.pl = pl.transform(at);
+		pl.addPoint(new Point2D(0, 0));
+		pl.addPoint(new Point2D(-LENGTH, WIDTH/2));
+		pl.addPoint(new Point2D(-LENGTH, -WIDTH/2));
+		pl.addPoint(new Point2D(0, 0));
+		Transform2D tr = new Transform2D(center, angle);
+		this.pl = pl.getTransformed(tr);
 	}
 		
-	@Override
-	public void draw(Graphics2D g, AffineTransform2D at) {
-		g.setStroke(stroke);
-		g.setColor(DRAW_COLOR);
-		pl.transform(at).draw(g);
-	}
-
 	public double getAngle() {
 		return angle;
 	}

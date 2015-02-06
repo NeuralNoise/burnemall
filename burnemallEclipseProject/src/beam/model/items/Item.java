@@ -1,11 +1,10 @@
 package beam.model.items;
 
+import geometry.Point2D;
+import geometry.Ray2D;
+
 import java.awt.Graphics2D;
 import java.util.Collection;
-
-import math.geom2d.AffineTransform2D;
-import math.geom2d.Point2D;
-import math.geom2d.line.Ray2D;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -46,9 +45,6 @@ public abstract class Item {
 		angle += d;
 		update();
 	}
-	
-	// bad design : drawing whouldn't be here... to be refactored
-	public abstract void draw(Graphics2D g, AffineTransform2D at);
 	
 	public abstract Point2D intersect(Ray2D beam);
 	public abstract Collection<Beam> interact(Beam beam, Point2D intersect); 
