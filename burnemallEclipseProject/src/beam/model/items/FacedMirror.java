@@ -1,27 +1,26 @@
 package beam.model.items;
 
+import geometry.Point2D;
+import geometry.Polyline2D;
+import geometry.Ray2D;
+import geometry.Segment2D;
+import geometry.Transform2D;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.Collection;
 
+import math.Angle;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import beam.model.Beam;
 import beam.model.ModelUtil;
-import beam.util.Angle;
 import beam.util.Precision;
 import beam.util.Util;
-import math.geom2d.AffineTransform2D;
-import math.geom2d.Angle2D;
-import math.geom2d.Point2D;
-import math.geom2d.Vector2D;
-import math.geom2d.line.LineSegment2D;
-import math.geom2d.line.Ray2D;
-import math.geom2d.polygon.Polyline2D;
-import math.geom2d.spline.QuadBezierCurve2D;
 
 @Root
 public class FacedMirror extends Item {
@@ -31,7 +30,7 @@ public class FacedMirror extends Item {
 	private static final double ARC = Angle.toRadians(90);
 
 	Polyline2D pl;
-	LineSegment2D intersectedFace;
+	Segment2D intersectedFace;
 	private final static Stroke stroke = new BasicStroke(2);
 
 	public FacedMirror(@Element(name="center") Point2D center, @Element(name="angle")  double angle) {
@@ -40,22 +39,17 @@ public class FacedMirror extends Item {
 	}
 
 	@Override
-	public void draw(Graphics2D g, AffineTransform2D at) {
-		g.setStroke(stroke);
-		g.setColor(Color.LIGHT_GRAY);
-		pl.transform(at).draw(g);
-	}
-
-	@Override
 	public Point2D intersect(Ray2D beam) {
 		Point2D nearest = null; 
-		for(LineSegment2D l : pl.edges()) {
-			Point2D i = l.intersection(beam);
-			if(i != null &&
-					!i.almostEquals(beam.firstPoint(), Precision.APPROX) && 
-					(nearest == null || i.distance(beam.firstPoint()) < nearest.distance(beam.firstPoint()))){
-				nearest = i;
-				intersectedFace = l;
+		for(Segment2D l : pl) {
+			if(beam.intersectAtSinglePoint(l)){
+				Point2D i = l.getUniqueIntersection(l);
+				if(i != null &&
+						!i.equals(beam.getStart()) && 
+						(nearest == null || i.getDistance(beam.getStart()) < nearest.getDistance(beam.getStart()))){
+					nearest = i;
+					intersectedFace = l;
+				}
 			}
 		}
 		return nearest;
@@ -63,21 +57,21 @@ public class FacedMirror extends Item {
 
 	@Override
 	public Collection<Beam> interact(Beam beam, Point2D intersect) {
-		double ang = Angle2D.angle(beam.getRay(), intersectedFace)+Math.PI/2;
+		double ang = Angle.getSmallestDifference(beam.getRay().getAngle(), intersectedFace.getAngle())+Math.PI/2;
 		Beam res = new Beam(beam);
-		res.setRay (new Ray2D(intersect, beam.getRay().direction().angle()+Math.PI+2*ang));
+		res.setRay (new Ray2D(intersect, beam.getRay().getAngle()+Math.PI+2*ang));
 		return Util.makeCollection(res);
 	}
 
 	@Override
 	void update() {
 		Polyline2D pl = new Polyline2D();
-		pl.addVertex(new Point2D(RADIUS, 0));
+		pl.addPoint(new Point2D(RADIUS, 0));
 		for(int i=0;i<NB_FACES; i++)
-			pl.addVertex(pl.lastPoint().rotate(new Point2D(0, 0), ARC/NB_FACES));
+			pl.addPoint(pl.getLastPoint().getRotation(ARC/NB_FACES, Point2D.ORIGIN));
 
-		AffineTransform2D at = AffineTransform2D.createRotation(angle).chain(AffineTransform2D.createTranslation(center.x(), center.y()));
-		this.pl = pl.transform(at);
+		Transform2D tr = new Transform2D(center, angle);
+		this.pl = pl.getTransformed(tr);
 	}
 
 }

@@ -1,6 +1,7 @@
 package beam.model.items;
 
 import geometry.Point2D;
+import geometry.Polyline2D;
 import geometry.Ray2D;
 import geometry.Transform2D;
 
@@ -16,7 +17,6 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import collections.Polyline2D;
 import beam.model.Beam;
 import beam.model.MyColor;
 

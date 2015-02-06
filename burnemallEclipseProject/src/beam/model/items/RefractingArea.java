@@ -1,23 +1,11 @@
 package beam.model.items;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.util.Collection;
-
-import math.geom2d.AffineTransform2D;
-import math.geom2d.Angle2D;
-import math.geom2d.Point2D;
-import math.geom2d.line.LineSegment2D;
-import math.geom2d.line.Ray2D;
-import math.geom2d.polygon.Polyline2D;
+import geometry.Point2D;
+import geometry.Polyline2D;
+import geometry.Transform2D;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
-
-import beam.model.Beam;
-import beam.util.Angle;
-import beam.util.Precision;
-import beam.util.Util;
 
 @Root
 public class RefractingArea extends Refractor {
@@ -39,14 +27,13 @@ public class RefractingArea extends Refractor {
 	@Override
 	void update() {
 		Polyline2D pl = new Polyline2D();
-		pl.addVertex(new Point2D(-width/2, -height/2));
-		pl.addVertex(new Point2D(+width/2, -height/2));
-		pl.addVertex(new Point2D(+width/2, +height/2));
-		pl.addVertex(new Point2D(-width/2, +height/2));
-		pl.addVertex(pl.firstPoint());
+		pl.addPoint(new Point2D(-width/2, -height/2));
+		pl.addPoint(new Point2D(+width/2, -height/2));
+		pl.addPoint(new Point2D(+width/2, +height/2));
+		pl.addPoint(new Point2D(-width/2, +height/2));
+		pl.addPoint(pl.getFirstPoint());
 
-		AffineTransform2D at = AffineTransform2D.createRotation(angle).chain(AffineTransform2D.createTranslation(center.x(), center.y()));
-
-		this.pl = pl.transform(at);
+		Transform2D tr = new Transform2D(center, angle);
+		this.pl = pl.getTransformed(tr);
 	}
 }

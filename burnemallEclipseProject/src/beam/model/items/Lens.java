@@ -1,21 +1,15 @@
 package beam.model.items;
 
+import geometry.Point2D;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Collection;
-
-import math.geom2d.AffineTransform2D;
-import math.geom2d.Angle2D;
-import math.geom2d.Point2D;
-import math.geom2d.line.LineSegment2D;
-import math.geom2d.line.Ray2D;
-import math.geom2d.polygon.Polyline2D;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import beam.model.Beam;
-import beam.util.Angle;
 import beam.util.Precision;
 import beam.util.Util;
 
