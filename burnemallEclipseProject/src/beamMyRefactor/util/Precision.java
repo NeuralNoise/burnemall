@@ -1,4 +1,4 @@
-package beam.util;
+package beamMyRefactor.util;
 
 public class Precision {
 	public static final double APPROX = 0.0001;

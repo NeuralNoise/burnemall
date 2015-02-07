@@ -43,5 +43,38 @@ public class MyColor {
 	public MyColor getScaled(double f){
 		return new MyColor((int)(red*f), (int)(green*f), (int)(blue*f));
 	}
+	
+	public static MyColor getSpectralColor(double rate){
+		int i = (int)(1275*rate);
+		int r = 0;
+		int g = 0;
+		int b = 0;
+		if(i>=0 && i<255){
+			r = 255;
+			g = i;
+			b = 0;
+		}
+		if(i>=255 && i<510){
+			r = 510-i;
+			g = 255;
+			b = 0;
+		}
+		if(i>=510 && i<765){
+			r = 0;
+			g = 255;
+			b = i-510;
+		}
+		if(i>=765 && i<1020){
+			r = 0;
+			g = 1020-i;
+			b = 255;
+		}
+		if(i>=1020 && i<=1275){
+			r = i-1020;
+			g = 0;
+			b = 255;
+		}
+		return new MyColor(r, g, b);
+	}
 
 }

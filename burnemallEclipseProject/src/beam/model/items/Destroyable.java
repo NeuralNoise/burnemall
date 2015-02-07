@@ -1,13 +1,14 @@
 package beam.model.items;
 
-import geometry.Circle2D;
-import geometry.Point2D;
-import geometry.Ray2D;
-import geometry.Transform2D;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Collection;
+
+import math.geom2d.AffineTransform2D;
+import math.geom2d.Point2D;
+import math.geom2d.conic.Circle2D;
+import math.geom2d.conic.EllipseShape2D;
+import math.geom2d.line.Ray2D;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -21,7 +22,7 @@ public class Destroyable extends Item {
 	private static final double HP = 10;
 	private static final double DPS = 5;
 	
-	Circle2D c;
+	EllipseShape2D c;
 	
 	double h = HP;
 	Color initCol = Color.gray;
@@ -35,15 +36,21 @@ public class Destroyable extends Item {
 	}
 
 	@Override
+	public void draw(Graphics2D g, AffineTransform2D at) {
+		g.setColor(col);
+		c.transform(at).draw(g);
+	}
+
+	@Override
 	public Point2D intersect(Ray2D beam) {
 		if(destroyed())
 			return null;
 		
-		Collection<Point2D> i = beam.getIntersectionsWithCircle(c);
+		Collection<Point2D> i = c.intersections(beam);
 		if(!i.isEmpty())
 			hit = true;
 		
-		return ModelUtil.nearest(i, beam.getStart());
+		return ModelUtil.nearest(i, beam.firstPoint());
 	}
 
 	@Override
@@ -63,8 +70,8 @@ public class Destroyable extends Item {
 	@Override
 	void update() {
 		c = new Circle2D(new Point2D(0, 0), 5);
-		Transform2D tr = new Transform2D(center, angle);
-		c = c.getTransformed(tr);
+		AffineTransform2D at = AffineTransform2D.createRotation(angle).chain(AffineTransform2D.createTranslation(center.x(), center.y()));
+		c = c.transform(at);
 	}
 
 	@Override

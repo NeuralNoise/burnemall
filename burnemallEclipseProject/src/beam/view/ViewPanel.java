@@ -28,7 +28,8 @@ import beam.util.StopWatch;
 public class ViewPanel extends JPanel {
 
 	private static final Stroke SELECT_STROKE = new BasicStroke(2);
-	private static final Color SELECT_COLOR = new Color(50, 50, 50, 250);
+	private static final Color AIM_COLOR = new Color(50, 50, 50, 250);
+	private static final Color SELECT_COLOR = new Color(100, 50, 50, 250);
 	private static final int BEAM_GLOW_RADIUS = 3;
 	
 	private Model model;
@@ -60,6 +61,12 @@ public class ViewPanel extends JPanel {
 		g.fillRect(0, 0, getWidth(),  getHeight());
 
 		synchronized(model) {
+			// draw aiming circle
+			g.setStroke(SELECT_STROKE);
+			g.setColor(AIM_COLOR);
+			if (model.getAimedItem()!=null && model.getAimedItem() != model.getSelectedItem())
+				model.getAimedItem().center().transform(atg).draw(g, 25);
+
 			// draw selection circle
 			g.setStroke(SELECT_STROKE);
 			g.setColor(SELECT_COLOR);
@@ -71,7 +78,7 @@ public class ViewPanel extends JPanel {
 				draw(g, atg, i);
 			}
  
-	        Composite transp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+	        Composite transp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);
 	        Composite opaque = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
 
 			// draw light
@@ -84,12 +91,14 @@ public class ViewPanel extends JPanel {
 							continue;
 						g.setStroke(new BasicStroke(2));
 						g.setColor(b.getColor().getAwt());
+				        transp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max((float)b.intensity*0.2f, 0.08f));
 				        g.setComposite(transp);
 						b.getSegment().transform(atg).draw(g);
 					} else {
 						g.setStroke(new BasicStroke((float)b.getWidth()+i));
 						g.setColor(b.getColor().getScaled(1-(double)i/BEAM_GLOW_RADIUS).getAwt());
-				        g.setComposite(opaque);
+				        transp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max((float)b.intensity, 0.08f));
+				        g.setComposite(transp);
 						b.getSegment().transform(atg).draw(g);
 					}
 			}
@@ -97,7 +106,7 @@ public class ViewPanel extends JPanel {
 	        g.setComposite(opaque);
 			g.setColor(Color.lightGray);
 			g.setFont(new Font("Arial",Font.PLAIN,12));
-			g.drawString(Recorder.str(), 0+4,  getHeight()-4);
+			g.drawString(Recorder.str()+"Beams : "+model.producedBeamCount, 0+4,  getHeight()-4);
 		}
 		Recorder.record(chrono);
 	}

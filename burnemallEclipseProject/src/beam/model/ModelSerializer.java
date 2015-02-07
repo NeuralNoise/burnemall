@@ -1,7 +1,6 @@
 package beam.model;
 
 import java.io.File;
-import java.io.InputStream;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;

@@ -1,4 +1,4 @@
-package beam.model.items;
+package beamMyRefactor.model.items;
 
 import geometry.Point2D;
 import geometry.Polyline2D;
@@ -17,10 +17,10 @@ import math.Angle;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beam.model.Beam;
-import beam.model.ModelUtil;
-import beam.util.Precision;
-import beam.util.Util;
+import beamMyRefactor.model.Beam;
+import beamMyRefactor.model.ModelUtil;
+import beamMyRefactor.util.Precision;
+import beamMyRefactor.util.Util;
 
 @Root
 public class FacedMirror extends Item {

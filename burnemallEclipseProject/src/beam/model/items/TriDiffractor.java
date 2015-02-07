@@ -1,16 +1,12 @@
 package beam.model.items;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
 import math.geom2d.AffineTransform2D;
-import math.geom2d.Angle2D;
-import math.geom2d.ColinearPoints2DException;
 import math.geom2d.Point2D;
 import math.geom2d.line.LineSegment2D;
 import math.geom2d.line.Ray2D;
@@ -19,9 +15,9 @@ import math.geom2d.polygon.Polyline2D;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import beam.MyGeometry.math.Angle;
+import beam.MyGeometry.math.Precision;
 import beam.model.Beam;
-import beam.util.Angle;
-import beam.util.Precision;
 
 @Root
 public class TriDiffractor extends Item {

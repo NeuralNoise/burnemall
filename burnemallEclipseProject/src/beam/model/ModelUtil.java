@@ -1,8 +1,8 @@
 package beam.model;
 
-import geometry.Point2D;
-
 import java.util.Collection;
+
+import math.geom2d.Point2D;
 
 public class ModelUtil {
 
@@ -10,7 +10,7 @@ public class ModelUtil {
 		Point2D res = null;
 		double dist = Double.MAX_VALUE;
 		for (Point2D p : points) {
-			double d = p.getDistance(point);
+			double d = p.distance(point);
 			if (d<dist) {
 				dist=d;
 				res=p;
@@ -23,7 +23,7 @@ public class ModelUtil {
 		Point2D res = null;
 		double dist = 0;
 		for (Point2D p : points) {
-			double d = p.getDistance(point);
+			double d = p.distance(point);
 			if (d>dist) {
 				dist=d;
 				res=p;

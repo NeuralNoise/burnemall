@@ -1,10 +1,12 @@
 package beam.model.items;
 
-import geometry.Point2D;
-import geometry.Ray2D;
-
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.Collection;
+
+import math.geom2d.AffineTransform2D;
+import math.geom2d.Point2D;
+import math.geom2d.line.Ray2D;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -33,11 +35,8 @@ public abstract class Item {
 		return center;
 	}
 	
-	public final void move(Point2D center) {
+	public void move(Point2D center) {
 		this.center = center;
-		// TODO This design require the shape of the subclass to be recomputed after each move, which may make inconsistent result
-		// for randomized shapes like the RockObstacle, or CPU consuming for more complex shapes.
-		// Maybe the update method should required a translation vector to transform the original shape instead.
 		update();
 	}	
 
@@ -46,6 +45,14 @@ public abstract class Item {
 		update();
 	}
 	
+	public void setAngle(double a){
+		angle = a;
+		update();
+	}
+	
+	// bad design : drawing whouldn't be here... to be refactored
+	public abstract void draw(Graphics2D g, AffineTransform2D at);
+	
 	public abstract Point2D intersect(Ray2D beam);
 	public abstract Collection<Beam> interact(Beam beam, Point2D intersect); 
 	
@@ -53,7 +60,7 @@ public abstract class Item {
 	abstract void update();
 
 	public Collection<Beam> produceBeam() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	public Point2D getCenter() {

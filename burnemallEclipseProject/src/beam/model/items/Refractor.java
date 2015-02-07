@@ -1,83 +1,131 @@
 package beam.model.items;
 
-import geometry.Point2D;
-import geometry.Polyline2D;
-import geometry.Ray2D;
-import geometry.Segment2D;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.Collection;
 
-import math.Angle;
+import math.geom2d.AffineTransform2D;
+import math.geom2d.Point2D;
+import math.geom2d.line.LineSegment2D;
+import math.geom2d.line.Ray2D;
+import math.geom2d.polygon.Polyline2D;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import beam.MyGeometry.geometry.Facet;
+import beam.MyGeometry.math.Angle;
+import beam.MyGeometry.math.Precision;
 import beam.model.Beam;
-import beam.util.Precision;
-import beam.util.Util;
+import beam.util.Translator;
 
 @Root
-public class Refractor extends Item {
+public class Refractor extends GeometricItem {
 
-
+	private static final int DISPERSED_RAYS = 20;
 	@Element
-	double incidence;
+	double minRefract;
+	@Element
+	double maxRefract;
 	
-	Polyline2D pl;
-	Segment2D intersectedFace;
-	
-	public Refractor(@Element(name="center") Point2D center, @Element(name="angle") double angle, @Element(name="incidence") double incidence) {
+	/*
+	 * To create a non dispersing refractor, set the min and max to the same value 
+	 */
+	public Refractor(@Element(name="center") Point2D center, @Element(name="angle") double angle, @Element(name="minRefract") double minRefract, @Element(name="maxRefract") double maxRefract) {
 		super(center, angle);
-		this.incidence = incidence;
+		this.minRefract = minRefract;
+		this.maxRefract = maxRefract;
 	}
 
-	@Override
-	void update() {
-	}
-
-	@Override
-	public Point2D intersect(Ray2D beam) {
-		Point2D nearest = null; 
-		for(Segment2D l : pl) {
-			if(beam.intersectAtSinglePoint(l)){
-				Point2D i = beam.getUniqueIntersection(l);
-				if(i != null &&
-						!i.equals(beam.getStart()) && 
-						(nearest == null || i.getDistance(beam.getStart()) < nearest.getDistance(beam.getStart()))){
-					nearest = i;
-					intersectedFace = l;
-				}
-			}
-		}
-		return nearest;
-	}
 
 	@Override
 	public Collection<Beam> interact(Beam beam, Point2D intersect) {
-		// TODO we may cast a residual reflexion beam
-		
+		ArrayList<Beam> res = new ArrayList<>();
+
+		if(minRefract == maxRefract) {
+			// Here this is the same refraction index for all the color specter
+			double refractionIndex = minRefract;
+			res.addAll(getRefracted(beam, intersect, refractionIndex));
+		} else if(beam.isDispersed() || !beam.isLight()) {
+			// Here the beam as already been dispersed.
+			double refractionIndex = minRefract+(maxRefract-minRefract)*beam.getSpectralRate();
+			res.addAll(getRefracted(beam, intersect, refractionIndex));
+		} else {
+			for(int i=DISPERSED_RAYS-1; i>=0; i--){
+				double spectralRate = (double)i/DISPERSED_RAYS;
+
+				double refractionIndex = minRefract+spectralRate*(maxRefract-minRefract);
+				ArrayList<Beam> rt = getRefracted(beam, intersect, refractionIndex);
+
+				res.add(rt.get(0));
+				if(rt.size() > 1){
+					rt.get(1).disperse(spectralRate);
+					res.add(rt.get(1));
+				}
+			}
+		}
+		return res;
+	}
+	
+	private ArrayList<Beam> getRefracted(Beam beam, Point2D start, double refractionIndex){
 		// check if the beam enters or leaves
-		double incidence = pl.hasInside(beam.getRay().getStart())? 1/this.incidence: this.incidence;
-				
-		// compute normal angle depending on the face direction
-		double normal = intersectedFace.getAngle()+Angle.RIGHT;
-		if(Angle.getTurn(intersectedFace.getStart(), intersectedFace.getEnd(), beam.getRay().getStart()) == Angle.CLOCKWISE)
-			normal += Angle.FLAT;
-		
-		double incident = Angle.getOrientedDifference(normal, beam.getRay().getAngle()+Angle.FLAT);
-		double critical = Math.asin(1/incidence);
-		double refraction;
-		if(incidence < 1 || Math.abs(incident) < critical)
-			refraction = Math.asin(Math.sin(incident)*incidence);
+		boolean enters = true;
+		for(Facet f : shape)
+			if(f.isOver(Translator.toMyGeom(beam.getRay().firstPoint()))){
+				enters = false;
+				break;
+			}
+		refractionIndex = enters ? refractionIndex : 1/refractionIndex;
+
+		double incident = Angle.getOrientedDifference(collisionNormal, beam.getRay().direction().angle()+Angle.FLAT);
+
+		double critical = Math.asin(refractionIndex);
+		double refractionAngle;
+		if(refractionIndex > 1 || Math.abs(incident) < critical)
+			refractionAngle = Math.asin(Math.sin(incident)/refractionIndex);
 		else
 			// total refraction, only remains reflexion
-			refraction = Angle.FLAT-incident;
+			refractionAngle = Double.NaN;
 		
-		Beam res = new Beam(beam);
-		res.setRay (new Ray2D(intersect, normal+Angle.FLAT+refraction));
-		return Util.makeCollection(res);
+		// Fresnel equations for reflexion/refraction intensity;
+		double reflexionCoef, refractionCoef;
+		if(Double.isNaN(refractionAngle)){
+			reflexionCoef = 1;
+			refractionCoef = 0;
+		} else {
+			double n1 = 1;
+			double n2 = refractionIndex;
+			if(!enters){
+				n1 = refractionIndex;
+				n2 = 1;
+			}
+			double cosI = Math.cos(incident);
+			double cosT = Math.cos(refractionAngle);
+			
+			double SPolarized = (n1*cosI-n2*cosT)/(n1*cosI+n2*cosT);
+			SPolarized = SPolarized*SPolarized;
+			double PPolarized = (n1*cosT-n2*cosI)/(n1*cosT+n2*cosI);
+			PPolarized = PPolarized*PPolarized;
+			reflexionCoef = Math.max(0, (SPolarized+PPolarized)/2);
+			refractionCoef = 1-reflexionCoef;
+		}
+
+		ArrayList<Beam> res = new ArrayList<>();
+
+		Beam reflexion = new Beam(beam);
+		reflexion.setRay(new Ray2D(start, collisionNormal-incident));
+		reflexion.intensity = beam.intensity*reflexionCoef;
+		res.add(reflexion);
+		
+		if(!Double.isNaN(refractionAngle)){
+			Beam refraction = new Beam(beam);
+			refraction.setRay (new Ray2D(start, collisionNormal+Angle.FLAT+refractionAngle));
+			refraction.intensity = beam.intensity*refractionCoef;
+			res.add(refraction);
+		}
+		
+		return res;
 	}
 	
 }

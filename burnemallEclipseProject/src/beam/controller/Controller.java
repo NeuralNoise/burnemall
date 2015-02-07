@@ -3,12 +3,13 @@ package beam.controller;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 
+import math.geom2d.Point2D;
+import math.geom2d.line.LineSegment2D;
+
+import beam.MyGeometry.geometry.Segment2D;
 import beam.model.Model;
 import beam.model.items.Item;
-import beam.model.items.Mirror;
 import beam.view.ViewPanel;
 
 public class Controller implements MouseListener, MouseMotionListener {
@@ -18,7 +19,10 @@ public class Controller implements MouseListener, MouseMotionListener {
 	private Model model;
 	private ViewPanel view;
 	boolean stop =false;
-	Point2D point;
+	double angle;
+	Point2D spacePoint;
+	boolean drag = false;
+	long pressionTime;
 		
 	Action action = Action.NONE;
 	
@@ -38,7 +42,11 @@ public class Controller implements MouseListener, MouseMotionListener {
 							try {
 								Thread.sleep(20);
 								if (action!=Action.NONE && model.getSelectedItem()!=null) {
-									model.getSelectedItem().addAngle((action==Action.CLICK?1:-1)*Math.PI/200);
+									if(action == Action.RCLICK){
+										if(pressionTime+100 < System.currentTimeMillis())
+											model.getSelectedItem().setAngle(angle);
+									} else if(drag)
+										model.getSelectedItem().move(spacePoint);
 								}
 								model.tick();
 								view.repaint();
@@ -55,7 +63,11 @@ public class Controller implements MouseListener, MouseMotionListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent e) {
+		Point2D clickLoc = model.screenToSpace(e.getPoint());
+		model.aimItem(clickLoc);
+		if(model.getAimedItem() == null)
+			model.setSelectedItem(null);
 	}
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
@@ -65,26 +77,41 @@ public class Controller implements MouseListener, MouseMotionListener {
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
+		Point2D clickLoc = model.screenToSpace(e.getPoint());
+		model.aimItem(clickLoc);
+		model.selectAimed();
+		
+		if(model.getSelectedItem() != null)
+			drag = clickLoc.distance(model.getSelectedItem().center()) < 20 ? true : false;
+
 		if (e.getButton()==3)
 			action = Action.CLICK;
 		else 
 			action = Action.RCLICK;
+		pressionTime = System.currentTimeMillis();
 	}
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
+	public void mouseReleased(MouseEvent e) {
+		Point2D clickLoc = model.screenToSpace(e.getPoint());
+		model.aimItem(clickLoc);
 		action = Action.NONE;
 	}
 
 	@Override
-	public void mouseDragged(MouseEvent arg0) {
+	public void mouseDragged(MouseEvent e) {
+		Point2D clickLoc = model.screenToSpace(e.getPoint());
+		if(model.getSelectedItem() != null){
+			LineSegment2D moment = new LineSegment2D(model.getSelectedItem().center(), new math.geom2d.Point2D(clickLoc.getX(), clickLoc.getY()));
+			angle = moment.direction().angle();
+		}
+		spacePoint = clickLoc;
 	}
 
 	@Override 
 	public void mouseMoved(MouseEvent e) {
-		AffineTransform at = model.getScreen2modelAT();
-		Item m = model.getNearestItemFromModelSpace(at.transform(e.getPoint(), null));
-		model.setSelectedItem(m);
-		point = e.getPoint();
+		Point2D clickLoc = model.screenToSpace(e.getPoint());
+		spacePoint = clickLoc;
+		model.aimItem(clickLoc);
 	}
 
 }
