@@ -18,7 +18,7 @@ import beamMyRefactor.util.Util;
 
 public class Randomizer extends Item {
 
-	Circle2D c;
+	Circle2D shape;
 	
 	private long timeFrame = 0;
 	private Random rand = new Random();
@@ -31,12 +31,12 @@ public class Randomizer extends Item {
 
 	@Override
 	public Point2D intersect(Ray2D beam) {
-		return ModelUtil.nearest(beam.getIntersection(c).getAll(), beam.getStart());
+		return ModelUtil.nearest(beam.getIntersection(shape).getAll(), beam.getStart());
 	}
 
 	@Override
 	public Collection<Beam> interact(Beam beam, Point2D intersect) {
-		Point2D out = ModelUtil.farthest(beam.getRay().getIntersection(c).getAll(), beam.getRay().getStart());
+		Point2D out = ModelUtil.farthest(beam.getRay().getIntersection(shape).getAll(), beam.getRay().getStart());
 		Beam res = new Beam(beam);
 		long timeFrame = System.currentTimeMillis()/300;
 		if (this.timeFrame!=timeFrame) {
@@ -49,9 +49,14 @@ public class Randomizer extends Item {
 	}
 
 	@Override
-	void update() {
-		c = new Circle2D(new Point2D(0, 0), 5);
+	protected void update() {
+		shape = new Circle2D(new Point2D(0, 0), 5);
 		Transform2D tr = new Transform2D(center, angle);
-		c = c.getTransformed(tr);
+		shape = shape.getTransformed(tr);
+	}
+	
+	@Override
+	public Object getShape() {
+		return shape;
 	}
 }

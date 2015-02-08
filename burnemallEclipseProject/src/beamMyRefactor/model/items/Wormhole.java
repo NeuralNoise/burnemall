@@ -19,7 +19,7 @@ import beamMyRefactor.util.Util;
 @Root
 public class Wormhole extends Item {
 	
-	Circle2D c;
+	Circle2D shape;
 	
 	Wormhole binome = null;
 
@@ -30,9 +30,9 @@ public class Wormhole extends Item {
 
 	@Override
 	public Point2D intersect(Ray2D beam) {
-		if(c.isInside(beam.getStart()))
+		if(shape.isInside(beam.getStart()))
 			return null;
-		return ModelUtil.nearest(beam.getIntersection(c).getAll(), beam.getStart());
+		return ModelUtil.nearest(beam.getIntersection(shape).getAll(), beam.getStart());
 	}
 
 	@Override
@@ -45,11 +45,11 @@ public class Wormhole extends Item {
 	}
 
 	@Override
-	void update() {
-		c = new Circle2D(new Point2D(0, 0), 7.5);
+	protected void update() {
+		shape = new Circle2D(new Point2D(0, 0), 7.5);
 		
 		Transform2D tr = new Transform2D(center, angle);
-		c = c.getTransformed(tr);
+		shape = shape.getTransformed(tr);
 	}
 
 	@Override
@@ -67,5 +67,10 @@ public class Wormhole extends Item {
 	
 	public Wormhole getBinome(){
 		return binome;
+	}
+	
+	@Override
+	public Object getShape() {
+		return shape;
 	}
 }

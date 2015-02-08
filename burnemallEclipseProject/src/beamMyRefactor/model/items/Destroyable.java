@@ -22,7 +22,7 @@ public class Destroyable extends Item {
 	private static final double HP = 10;
 	private static final double DPS = 5;
 	
-	Circle2D c;
+	Circle2D shape;
 	
 	double h = HP;
 	Color initCol = Color.gray;
@@ -40,7 +40,7 @@ public class Destroyable extends Item {
 		if(destroyed())
 			return null;
 		
-		List<Point2D> i = beam.getIntersection(c).getAll();
+		List<Point2D> i = beam.getIntersection(shape).getAll();
 		if(!i.isEmpty())
 			hit = true;
 		
@@ -62,10 +62,10 @@ public class Destroyable extends Item {
 	}
 
 	@Override
-	void update() {
-		c = new Circle2D(new Point2D(0, 0), 5);
+	protected void update() {
+		shape = new Circle2D(new Point2D(0, 0), 5);
 		Transform2D tr = new Transform2D(center, angle);
-		c = c.getTransformed(tr);
+		shape = shape.getTransformed(tr);
 	}
 
 	@Override
@@ -76,5 +76,10 @@ public class Destroyable extends Item {
 	
 	boolean destroyed(){
 		return h <= 0;
+	}
+	
+	@Override
+	public Object getShape() {
+		return shape;
 	}
 }

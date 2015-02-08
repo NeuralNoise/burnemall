@@ -64,11 +64,16 @@ public class Blackhole extends Item {
 	}
 
 	@Override
-	void update() {
+	protected void update() {
 		shape = new Circle2D(new Point2D(0, 0), 5);
 		orbit = new Circle2D(new Point2D(0, 0), ORBIT_RADIUS);
 		Transform2D tr = new Transform2D(center, angle);
 		shape = shape.getTransformed(tr);
 		orbit = orbit.getTransformed(tr);
+	}
+	
+	@Override
+	public Object getShape() {
+		return shape;
 	}
 }

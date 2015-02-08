@@ -20,7 +20,6 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import beamMyRefactor.model.Beam;
-import beamMyRefactor.util.Precision;
 
 @Root
 public class TriDiffractor extends Item {
@@ -37,7 +36,7 @@ public class TriDiffractor extends Item {
 	}
 
 	@Override
-	void update() {
+	protected void update() {
 		Polyline2D pl = new Polyline2D();
 		pl.addPoint(Point2D.ORIGIN.getTranslation(0, WIDTH));
 		pl.addPoint(Point2D.ORIGIN.getTranslation(Angle.FULL/3, WIDTH));
@@ -83,6 +82,11 @@ public class TriDiffractor extends Item {
 	@Override
 	public void beforeTick() {
 		beams.clear();
+	}
+	
+	@Override
+	public Object getShape() {
+		return pl;
 	}
 
 }

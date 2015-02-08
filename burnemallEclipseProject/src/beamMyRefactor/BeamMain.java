@@ -1,5 +1,9 @@
 package beamMyRefactor;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import tools.LogUtil;
 import beamMyRefactor.controller.Controller;
 import beamMyRefactor.controller.EditController;
 import beamMyRefactor.model.Model;
@@ -12,6 +16,8 @@ public class BeamMain {
 
 	public static void main(String[] args) throws Exception {
 
+		Logger.getLogger("").setLevel(Level.INFO);
+		LogUtil.init();
 		Model model=null;
 		if(LocalProp.DEFAULT_LOAD!=null) 
 			model = ModelSerializer.load(Locator.getFile(LocalProp.DEFAULT_LOAD));

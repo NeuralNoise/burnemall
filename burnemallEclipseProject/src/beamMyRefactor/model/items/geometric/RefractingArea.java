@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items;
+package beamMyRefactor.model.items.geometric;
 
 import geometry.Point2D;
 import geometry.Polyline2D;
@@ -18,22 +18,14 @@ public class RefractingArea extends Refractor {
 	double height;
 	
 	public RefractingArea(@Element(name="center") Point2D center, @Element(name="width") double width, @Element(name="height") double height, @Element(name="angle") double angle) {
-		super(center, angle, REFRACTION_INDEX);
+		super(center, angle, REFRACTION_INDEX, REFRACTION_INDEX);
 		this.width = width;
 		this.height = height;
+		initialShape.addPoint(new Point2D(-width/2, -height/2));
+		initialShape.addPoint(new Point2D(+width/2, -height/2));
+		initialShape.addPoint(new Point2D(+width/2, +height/2));
+		initialShape.addPoint(new Point2D(-width/2, +height/2));
+		initialShape.close();
 		update();
-	}
-
-	@Override
-	void update() {
-		Polyline2D pl = new Polyline2D();
-		pl.addPoint(new Point2D(-width/2, -height/2));
-		pl.addPoint(new Point2D(+width/2, -height/2));
-		pl.addPoint(new Point2D(+width/2, +height/2));
-		pl.addPoint(new Point2D(-width/2, +height/2));
-		pl.addPoint(pl.getFirstPoint());
-
-		Transform2D tr = new Transform2D(center, angle);
-		this.pl = pl.getTransformed(tr);
 	}
 }

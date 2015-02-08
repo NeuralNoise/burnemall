@@ -17,6 +17,7 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import beam.MyGeometry.math.MyRandom;
 import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.MyColor;
 
@@ -56,7 +57,7 @@ public class Beamer extends Item {
 	}
 
 	@Override
-	void update() {
+	protected void update() {
 		Polyline2D pl = new Polyline2D();
 		pl.addPoint(new Point2D(0, 0));
 		pl.addPoint(new Point2D(-LENGTH, WIDTH/2));
@@ -103,10 +104,34 @@ public class Beamer extends Item {
 		}
 		return res;
 	}
+
+	private boolean hasProduced = false;
+
+	public Beam produceSingleBeam(){
+		Beam res;
+		if (nbRays==1) {
+			if(hasProduced)
+				return null;
+			res = new Beam(color, rayWidth);
+			res.setRay (new Ray2D(center, angle));
+		} else {
+			double start = angle-spread/2+spread*MyRandom.next();
+			res = new Beam(color, rayWidth);
+			res.setRay (new Ray2D(center, start));
+			res.setAsLight();
+		}
+		hasProduced = true;
+		return res;
+	}
 	
 	public void setAsLight(int nbRays, double spreadAngle){
 		this.nbRays = nbRays;
 		this.spread = spreadAngle;
+	}
+	
+	@Override
+	public Polyline2D getShape() {
+		return pl;
 	}
 	
 }

@@ -1,18 +1,18 @@
 package beamMyRefactor.model;
 
 import geometry.Point2D;
+import geometry.Transform2D;
 
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import beamMyRefactor.model.items.Item;
+import beamMyRefactor.model.items.ItemHolder;
 import beamMyRefactor.model.items.Wormhole;
 import beamMyRefactor.util.Recorder;
 import beamMyRefactor.util.StopWatch;
@@ -32,12 +32,17 @@ public class Model {
 	@ElementList
 	private List<Item> items = new ArrayList<>();
 	private Item selectedItem = null;
+	private Item aimedItem;
+	
+	
+	private List<ItemHolder> holders = new ArrayList<>();
 
 	// the laser object stores all beams
 	private Laser laser = new Laser();
+	public int producedBeamCount;
 
 	// this affine transforms screen space to model space
-	private AffineTransform screen2modelAT = null;
+	private Transform2D screen2model = null;
 
 	public Model() {
 	}
@@ -54,10 +59,10 @@ public class Model {
 		for (Item i : items) {
 			i.beforeTick();
 			Collection<Beam> b = i.produceBeam();
-			if (b!=null)
-				activeBeams.addAll(b);
+			activeBeams.addAll(b);
 		}
 		int iter = 1;
+		producedBeamCount = activeBeams.size();
 		List<Beam> producedBeams = new ArrayList<>();
 		do {
 			iter++;
@@ -97,7 +102,11 @@ public class Model {
 			}
 			// - end of active beams, produced beams become active
 			activeBeams.clear();
-			activeBeams.addAll(producedBeams);
+			for(Beam b : producedBeams)
+				if(!b.attenuated()){
+					activeBeams.add(b);
+					producedBeamCount++;
+				}
 			// - until no new beams have been produced
 		} while (producedBeams.size()!=0);
 
@@ -108,12 +117,12 @@ public class Model {
 		return laser;
 	}
 	
-	public AffineTransform getScreen2modelAT() {
-		return screen2modelAT;
-	} 
+//	public Transform2D getToModelTransform() {
+//		return screen2model;
+//	} 
 
-	public void putScreen2modelAT(AffineTransform at) {
-		screen2modelAT = at; 
+	public void putToModelTransform(Transform2D tr) {
+		screen2model = tr; 
 	}
 
 	public void deleteItem(Item item) {		
@@ -122,14 +131,16 @@ public class Model {
 			items.remove(((Wormhole)item).getBinome());
 		// end ugly trick
 		items.remove(item);
+		for(ItemHolder h : holders)
+			h.getItems().remove(item);
+
 	}
 
-	public Item getNearestItemFromModelSpace(java.awt.geom.Point2D point) {
+	public Item getNearestItem(Point2D point) {
 		Item res = null;
 		double minDist = Double.MAX_VALUE;
-		Point2D mouse = new Point2D(point.getX(), point.getY());
 		for (Item m : items) {
-			double dist = mouse.getDistance(m.getCenter());
+			double dist = point.getDistance(m.getCenter());
 			if (dist<minDist) {
 				minDist = dist;
 				res = m;
@@ -152,23 +163,55 @@ public class Model {
 
 	public void add(Item item) {
 		assert item!=null;
-		
-		// another ugly trick to link whormholes at creation
+		if(item instanceof ItemHolder)
+			holders.add((ItemHolder)item);
+		// another ugly trick to link whormholes and itemholders
 		if(item instanceof Wormhole)
 			for(Item i : items)
 				if(i instanceof Wormhole && ((Wormhole)i).isLone())
 					((Wormhole)i).link((Wormhole)item);
 		// end ugly trick
-		
-		items.add(item);
+		if(selectedItem != null && selectedItem instanceof ItemHolder)
+			((ItemHolder)selectedItem).attach(item);
+		else
+			items.add(item);
 	}
 
-	public Point2D screenToSpace(java.awt.geom.Point2D point) {
-		if (screen2modelAT==null || point==null)
+	public Point2D transformFromScreenToModel(Point2D point) {
+		if (screen2model == null || point == null)
 			return null;
-		java.awt.geom.Point2D s2m = screen2modelAT.transform(point, null);
-		Point2D spacePoint = new Point2D(s2m.getX(), s2m.getY());
-		return spacePoint;
+		return point.getTransformed(screen2model);
 	}
+
+	public void aimItem(Point2D point){
+		List<Item> all = new ArrayList<Item>();
+		all.addAll(items);
+		for(ItemHolder h : holders)
+			all.addAll(h.getItems());
+		aimedItem = null;
+		double minDist = 20;
+		for (Item m : all) {
+			double dist = point.getDistance(m.getCenter());
+			if (dist<minDist) {
+				minDist = dist;
+				aimedItem = m;
+			}
+		}
+	}
+	
+	public void selectAimed(){
+		if(aimedItem != null)
+			selectedItem = aimedItem;
+	}
+	
+	public Item getAimedItem(){
+		return aimedItem;
+	}
+
+	public void deleteAimed() {
+		deleteItem(aimedItem);
+		aimedItem = null;
+	}
+	
 }
 
