@@ -4,7 +4,9 @@ import geometry.Point2D;
 import geometry.Polyline2D;
 import geometry.Ray2D;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -12,6 +14,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import beamMyRefactor.model.Beam;
+import beamMyRefactor.model.MyColor;
 
 @Root
 public abstract class Item {
@@ -20,6 +23,9 @@ public abstract class Item {
 	protected Point2D center;
 	@Element
 	protected double angle;
+	
+	protected int thickness = 1;
+	protected Color color = Color.GRAY;
 	
 	public Item(double x, double y, double angle) {
 		center = new Point2D(x,y);
@@ -69,6 +75,14 @@ public abstract class Item {
 	public void setAngle(double a) {
 		angle = a;
 		update();
+	}
+
+	public int getThickness() {
+		return thickness;
+	}
+	
+	public Color getColor() {
+		return color;
 	}
 		
 }

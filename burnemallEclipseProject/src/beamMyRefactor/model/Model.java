@@ -13,6 +13,7 @@ import org.simpleframework.xml.Root;
 
 import beamMyRefactor.model.items.Item;
 import beamMyRefactor.model.items.ItemHolder;
+import beamMyRefactor.model.items.Path;
 import beamMyRefactor.model.items.Wormhole;
 import beamMyRefactor.util.Recorder;
 import beamMyRefactor.util.StopWatch;
@@ -31,6 +32,8 @@ public class Model {
 
 	@ElementList
 	private List<Item> items = new ArrayList<>();
+
+	private List<Path> paths = new ArrayList<>();
 	private Item selectedItem = null;
 	private Item aimedItem;
 	
@@ -211,6 +214,10 @@ public class Model {
 	public void deleteAimed() {
 		deleteItem(aimedItem);
 		aimedItem = null;
+	}
+	
+	public void addPath(Path p){
+		paths.add(p);
 	}
 	
 }

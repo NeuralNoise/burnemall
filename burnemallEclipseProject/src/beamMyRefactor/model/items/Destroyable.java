@@ -13,59 +13,61 @@ import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import tools.LogUtil;
 import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.ModelUtil;
 
 @Root
 public class Destroyable extends Item {
 	
-	private static final double HP = 10;
+	private static final double HP = 100;
 	private static final double DPS = 5;
 	
+	Circle2D initialShape;
 	Circle2D shape;
 	
-	double h = HP;
-	Color initCol = Color.gray;
-	Color col = initCol;
+	double health = HP;
+	Color initCol;
 	double lastHit = 0;
 	boolean hit = false;
 
-	public Destroyable(@Element(name="center") Point2D center) {
-		super(center, 0);
+	public Destroyable(Point2D center, double angle) {
+		super(center, angle);
+		initialShape = new Circle2D(new Point2D(0, 0), 20);
 		update();
+		initCol = new Color(color.getRed(), color.getGreen(), color.getBlue());
 	}
-
+	
 	@Override
-	public Point2D intersect(Ray2D beam) {
+	public Point2D intersect(Ray2D ray) {
 		if(destroyed())
 			return null;
 		
-		List<Point2D> i = beam.getIntersection(shape).getAll();
+		List<Point2D> i = ray.getIntersection(shape).getAll();
 		if(!i.isEmpty())
 			hit = true;
 		
-		return ModelUtil.nearest(i, beam.getStart());
+		return ModelUtil.nearest(i, ray.getStart());
 	}
 
 	@Override
 	public Collection<Beam> interact(Beam beam, Point2D intersect) {
 		if(lastHit != 0)
-			h -= (System.currentTimeMillis()-lastHit)/1000*DPS;
+			health -= (System.currentTimeMillis()-lastHit)/1000*DPS;
 		lastHit = System.currentTimeMillis();
 		
 		if(!destroyed())
-			col = new Color(initCol.getRed()+(int)((1-h/HP)*(255-initCol.getRed())), initCol.getGreen(), initCol.getBlue());
+			color = new Color(initCol.getRed()+(int)((1-health/HP)*(255-initCol.getRed())), initCol.getGreen(), initCol.getBlue());
 		else
-			col = Color.DARK_GRAY;
+			color = Color.DARK_GRAY;
 		
 		return null;
 	}
 
 	@Override
 	protected void update() {
-		shape = new Circle2D(new Point2D(0, 0), 5);
 		Transform2D tr = new Transform2D(center, angle);
-		shape = shape.getTransformed(tr);
+		shape = initialShape.getTransformed(tr);
 	}
 
 	@Override
@@ -75,7 +77,7 @@ public class Destroyable extends Item {
 	}
 	
 	boolean destroyed(){
-		return h <= 0;
+		return health <= 0;
 	}
 	
 	@Override

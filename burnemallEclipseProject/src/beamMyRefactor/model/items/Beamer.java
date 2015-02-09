@@ -13,11 +13,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import math.MyRandom;
+
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beam.MyGeometry.math.MyRandom;
 import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.MyColor;
 

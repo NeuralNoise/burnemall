@@ -12,6 +12,7 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+import tools.LogUtil;
 import math.Angle;
 import beamMyRefactor.MainFrame;
 import beamMyRefactor.model.Model;
@@ -20,8 +21,11 @@ import beamMyRefactor.model.items.Beamer;
 import beamMyRefactor.model.items.Blackhole;
 import beamMyRefactor.model.items.Destroyable;
 import beamMyRefactor.model.items.Goal;
+import beamMyRefactor.model.items.Item;
 import beamMyRefactor.model.items.ItemHolder;
+import beamMyRefactor.model.items.Path;
 import beamMyRefactor.model.items.Randomizer;
+import beamMyRefactor.model.items.SootBall;
 import beamMyRefactor.model.items.TriDiffractor;
 import beamMyRefactor.model.items.Wormhole;
 import beamMyRefactor.model.items.geometric.FacetedMirror;
@@ -33,6 +37,7 @@ import beamMyRefactor.model.items.geometric.Raindrop;
 import beamMyRefactor.model.items.geometric.RefractingArea;
 import beamMyRefactor.model.items.geometric.RockObstacle;
 import beamMyRefactor.model.items.geometric.Wall;
+import beamMyRefactor.model.pathing.Waypoint;
 import beamMyRefactor.util.LocalProp;
 import beamMyRefactor.view.ViewPanel;
 
@@ -49,6 +54,7 @@ public class EditController implements KeyListener, MouseMotionListener  {
 	private Model model;
 	private MainFrame frame;
 	private ViewPanel view;
+	private Path actualPath = null;
 
 	private Mode mode = Mode.NONE;
 	
@@ -90,147 +96,107 @@ public class EditController implements KeyListener, MouseMotionListener  {
 	public void keyPressed(KeyEvent e) {
 		Point2D modelPoint = cont.modelPoint;
 		
-		if (e.getKeyChar()=='x') {
-			if(model.getSelectedItem() != model.getAimedItem())
-				model.deleteAimed();
-			else {
-				model.deleteItem(model.getSelectedItem());
-				model.setSelectedItem(null);
+		if (e.isShiftDown()){
+			Item i = null;
+			switch(e.getKeyChar()){
+			case 'M' : i = new Mirror(modelPoint, 50, 0); break;
+			case 'B' : i = new Beamer(modelPoint, 0); break;
+			case 'V' : i = new Beamer(modelPoint, 0);
+				((Beamer)i).setAsLight(50, Angle.toRadians(50));
+				break;
+			case 'A' : i = new FacetedMirror(modelPoint,0); break;
+			case 'G' : i = new Goal(modelPoint); break;
+			case 'R' : i = new Randomizer(modelPoint); break;
+			case 'O' : i = new RockObstacle(modelPoint); break;
+			case 'I' : i = new Wall(modelPoint); break;
+			case 'D' : i = new Destroyable(modelPoint, 0); break;
+			case 'E' : i = new RefractingArea(modelPoint, 100, 200, 0); break;
+			case 'T' : i = new TriDiffractor(modelPoint, 0); break;
+			case 'W' : i = new Wormhole(modelPoint); break;
+			case 'H' : i = new Blackhole(modelPoint); break;
+			case 'L' : i = new PositiveLens(modelPoint, 0, 60, 60); break;
+			case 'K' : i = new NegativeLens(modelPoint, 0, 100, 100); break;
+			case 'P' : i = new Prism(modelPoint, 0); break;
+			case 'S' : i = new Raindrop(modelPoint, 0); break;
+			case '1' : i = new ItemHolder(modelPoint, 0, 40); break;
+			case '2' : i = new ItemHolder(modelPoint, 0, 80); break;
+			case '3' : i = new ItemHolder(modelPoint, 0, 120); break;
+			case '4' : i = new ItemHolder(modelPoint, 0, 160); break;
 			}
-		} else if (e.isShiftDown() && e.getKeyChar()=='M') {
-			Mirror m = new Mirror(modelPoint, 50, 0);
-			model.add(m);
-			model.setSelectedItem(m);
-		} else if (e.isShiftDown() && e.getKeyChar()=='B') {
-			Beamer b = new Beamer(modelPoint, 0);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='V') {
-			Beamer b = new Beamer(modelPoint, 0);
-			b.setAsLight(50, Angle.toRadians(50));
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='A') {
-			FacetedMirror b = new FacetedMirror(modelPoint,0);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='G') {
-			Goal b = new Goal(modelPoint);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='R') {
-			Randomizer b = new Randomizer(modelPoint);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='O') {
-			RockObstacle b = new RockObstacle(modelPoint);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='I') {
-			Wall b = new Wall(modelPoint);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='D') {
-			Destroyable b = new Destroyable(modelPoint);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='E') {
-			RefractingArea b = new RefractingArea(modelPoint, 100, 200, 0);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='T') {
-			TriDiffractor b = new TriDiffractor(modelPoint, 0);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='W') {
-			Wormhole b = new Wormhole(modelPoint);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='H') {
-			Blackhole b = new Blackhole(modelPoint);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='L') {
-			PositiveLens b = new PositiveLens(modelPoint, 0, 60, 60);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='K') {
-			NegativeLens b = new NegativeLens(modelPoint, 0, 100, 100);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='P') {
-			Prism b = new Prism(modelPoint, 0);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='S') {
-			Raindrop b = new Raindrop(modelPoint, 0);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='1') {
-			ItemHolder b = new ItemHolder(modelPoint, 0, 40);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='2') {
-			ItemHolder b = new ItemHolder(modelPoint, 0, 80);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='3') {
-			ItemHolder b = new ItemHolder(modelPoint, 0, 120);
-			model.add(b);
-			model.setSelectedItem(b);
-		} else if (e.isShiftDown() && e.getKeyChar()=='4') {
-			ItemHolder b = new ItemHolder(modelPoint, 0, 160);
-			model.add(b);
-			model.setSelectedItem(b);
+			if(i != null){
+				model.add(i);
+				model.setSelectedItem(i);
+			}
+		} else {
+			switch(e.getKeyChar()){
+			case 'x' : 
+				if(model.getSelectedItem() != model.getAimedItem())
+					model.deleteAimed();
+				else {
+					model.deleteItem(model.getSelectedItem());
+					model.setSelectedItem(null);
+				}
+				break;
+			case 'a' :
+				if(actualPath == null){
+					actualPath = new Path(modelPoint);
+					model.add(actualPath);
+				} else
+					actualPath.add(new Waypoint(modelPoint));
+				break;
+			case 'q' : actualPath = null; break;
+			case 'n' : model.add(new SootBall(1, actualPath)); break;
+			}
 		}
 		
-		if (e.isControlDown() && e.getKeyCode()==KeyEvent.VK_N) {
-			cont.stop = true;
-			this.model = new Model();
-			frame.init(model);
-			this.view = frame.getViewPanel();
-			this.cont = new Controller(model,view);
-			mode = Mode.NONE;
-			view.addMouseMotionListener(this);
-			cont.start();
-		} else if (e.isControlDown() && e.getKeyCode()==KeyEvent.VK_S) {
-			try {
-				if (model.fileName!=null) {
-					ModelSerializer.write(model);
-					System.out.println("Saved OK");
-				} else {
-					final JFileChooser fc = new JFileChooser(LocalProp.RESOURCES_PATH);
-					int returnVal = fc.showSaveDialog(frame);
-					if (returnVal==JFileChooser.APPROVE_OPTION) {
-						File f = fc.getSelectedFile();
-						model.fileName=f.getCanonicalPath();
-						ModelSerializer.write(model);
-					}					
-				}
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		} else if (e.isControlDown() && e.getKeyCode()==KeyEvent.VK_L) {
-			final JFileChooser fc = new JFileChooser(LocalProp.RESOURCES_PATH);
-			int returnVal = fc.showOpenDialog(frame);
-			if (returnVal==JFileChooser.APPROVE_OPTION) {
-				File f = fc.getSelectedFile();
+		if (e.isControlDown())
+			if(e.getKeyCode()==KeyEvent.VK_N) {
+				cont.stop = true;
+				this.model = new Model();
+				frame.init(model);
+				this.view = frame.getViewPanel();
+				this.cont = new Controller(model,view);
+				mode = Mode.NONE;
+				view.addMouseMotionListener(this);
+				cont.start();
+			} else if(e.getKeyCode()==KeyEvent.VK_S) {
 				try {
-					cont.stop = true;
-					this.model = ModelSerializer.load(f);
-					frame.init(model);
-					this.view = frame.getViewPanel();
-					this.cont = new Controller(model,view);
-					mode = Mode.NONE;
-					view.addMouseMotionListener(this);
-					cont.start();
+					if (model.fileName!=null) {
+						ModelSerializer.write(model);
+						System.out.println("Saved OK");
+					} else {
+						final JFileChooser fc = new JFileChooser(LocalProp.RESOURCES_PATH);
+						int returnVal = fc.showSaveDialog(frame);
+						if (returnVal==JFileChooser.APPROVE_OPTION) {
+							File f = fc.getSelectedFile();
+							model.fileName=f.getCanonicalPath();
+							ModelSerializer.write(model);
+						}					
+					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			} else if(e.getKeyCode()==KeyEvent.VK_L) {
+				final JFileChooser fc = new JFileChooser(LocalProp.RESOURCES_PATH);
+				int returnVal = fc.showOpenDialog(frame);
+				if (returnVal==JFileChooser.APPROVE_OPTION) {
+					File f = fc.getSelectedFile();
+					try {
+						cont.stop = true;
+						this.model = ModelSerializer.load(f);
+						frame.init(model);
+						this.view = frame.getViewPanel();
+						this.cont = new Controller(model,view);
+						mode = Mode.NONE;
+						view.addMouseMotionListener(this);
+						cont.start();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 			}
-		}
 	}
 
 	@Override

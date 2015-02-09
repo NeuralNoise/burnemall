@@ -17,6 +17,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -68,19 +69,10 @@ public class ViewPanel extends JPanel {
 				draw(g, model.getSelectedItem().center(), 25);
 
 			// draw items
-			for (Item i : model.getItems()) {
-				Object shape = i.getShape();
-				if(shape instanceof FacetSerie)
-					for(Facet s : (FacetSerie)shape)
-						draw(g, s);
-				if(shape instanceof Polyline2D)
-					for(Segment2D s : (Polyline2D)shape)
-						draw(g, s);
-				else if(shape instanceof Segment2D)
-					draw(g, (Segment2D)shape);
-				else if(shape instanceof Circle2D)
-					draw(g, (Circle2D)shape);
-					
+			for (Item i : model.getItems()){
+				g.setStroke(new BasicStroke(i.getThickness()));
+				g.setColor(i.getColor());
+				draw(g, i.getShape());
 			}
  
 	        Composite transp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
@@ -117,19 +109,29 @@ public class ViewPanel extends JPanel {
 		
 	}
 	
-	public void draw(Graphics2D g, Point2D p, int diameter){
+	private void draw(Graphics2D g, Object object){
+		if(object instanceof Segment2D)
+			draw(g, (Segment2D)object);
+		else if(object instanceof Circle2D)
+			draw(g, (Circle2D)object);
+		else if(object instanceof List)
+			for(Object o : (List)object)
+				draw(g, o);
+	}
+	
+	private void draw(Graphics2D g, Point2D p, int diameter){
 		p = p.getTransformed(toScreenTransform);
 		g.fillOval((int)Math.round(p.x)-diameter/2, (int)Math.round(p.y)-diameter/2, diameter, diameter);
 	}
-	public void draw(Graphics2D g, Circle2D c){
+	private void draw(Graphics2D g, Circle2D c){
 		c = c.getTransformed(toScreenTransform);
-		g.drawOval((int)Math.round(c.center.x),
-				(int)Math.round(c.center.y),
-				(int)Math.round(c.radius),
-				(int)Math.round(c.radius));
+		g.drawOval((int)Math.round(c.center.x-c.radius),
+				(int)Math.round(c.center.y-c.radius),
+				(int)Math.round(c.radius*2),
+				(int)Math.round(c.radius*2));
 	}
 	
-	public void draw(Graphics2D g, Segment2D s){
+	private void draw(Graphics2D g, Segment2D s){
 		s = s.getTransformed(toScreenTransform);
 		g.drawLine((int)Math.round(s.getStart().x),
 				(int)Math.round(s.getStart().y),
