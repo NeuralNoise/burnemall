@@ -9,6 +9,8 @@ import java.awt.event.MouseMotionListener;
 
 import beamMyRefactor.model.Model;
 import beamMyRefactor.model.items.Item;
+import beamMyRefactor.model.items.Path;
+import beamMyRefactor.model.items.SootBall;
 import beamMyRefactor.model.items.geometric.Mirror;
 import beamMyRefactor.view.ViewPanel;
 
@@ -42,13 +44,15 @@ public class Controller implements MouseListener, MouseMotionListener {
 						while (true) {
 							try {
 								Thread.sleep(20);
-								if (action!=Action.NONE && model.getSelectedItem()!=null) {
-									if(action == Action.RCLICK){
-										if(pressionTime+100 < System.currentTimeMillis())
+								Item sel = model.getSelectedItem();
+								if(action != Action.NONE && sel != null)
+									if(action == Action.RCLICK
+											&& sel.canRotate() &&
+											pressionTime+100 < System.currentTimeMillis()){
 											model.getSelectedItem().setAngle(angle);
-									} else if(drag)
+									} else if(drag && 
+											sel.canMove())
 										model.getSelectedItem().move(modelPoint);
-								}
 								model.tick();
 								view.repaint();
 							} catch (Exception e) {
@@ -96,6 +100,8 @@ public class Controller implements MouseListener, MouseMotionListener {
 		Point2D click = model.transformFromScreenToModel(new Point2D(e.getX(), e.getY()));
 		model.aimItem(click);
 		action = Action.NONE;
+		if(model.getAimedItem() instanceof Path)
+			model.addToWave(new SootBall(0.5, (Path)model.getAimedItem()));
 	}
 
 	@Override

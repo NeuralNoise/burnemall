@@ -1,5 +1,6 @@
 package beamMyRefactor.model.items;
 
+import math.MyRandom;
 import tools.LogUtil;
 import beamMyRefactor.model.pathing.Waypoint;
 import geometry.Point2D;
@@ -14,12 +15,23 @@ public class SootBall extends Destroyable {
 	Point2D velocity = Point2D.ORIGIN;
 	
 	public SootBall(double maxSpeed, Path path) {
-		super(Point2D.ORIGIN, 0);
+		super(Point2D.ORIGIN, 0, MyRandom.between(5, 9));
 		this.maxSpeed = maxSpeed;
 		this.path = path;
 		actualWaypoint = path.get(0);
 		center = actualWaypoint.coord;
 		health = 10;
+		inithealth = 10;
+		
+	}
+	public SootBall(SootBall other){
+		super(Point2D.ORIGIN, 0, MyRandom.between(5, 9));
+		maxSpeed = other.maxSpeed;
+		path = other.path;
+		actualWaypoint = path.get(0);
+		center = actualWaypoint.coord;
+		health = 10;
+		inithealth = 10;
 	}
 	
 	@Override
@@ -33,7 +45,6 @@ public class SootBall extends Destroyable {
 			velocity = velocity.getAddition(steering).getScaled(maxSpeed);
 		
 		center = center.getAddition(velocity);
-		LogUtil.logger.info("pos : "+center);
 		super.update();
 	}
 	
@@ -42,9 +53,10 @@ public class SootBall extends Destroyable {
 		if(center.getDistance(target) < 1)
 			actualWaypoint = path.getNext(actualWaypoint);
 		
-		Point2D steering = actualWaypoint.coord.getSubtraction(center).getTruncation(1); 
-		return steering;
-		
+		if(actualWaypoint != null)
+			return actualWaypoint.coord.getSubtraction(center).getTruncation(1);
+		else
+			return Point2D.ORIGIN;
 	}
 	
 	@Override

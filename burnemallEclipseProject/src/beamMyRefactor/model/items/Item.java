@@ -84,5 +84,13 @@ public abstract class Item {
 	public Color getColor() {
 		return color;
 	}
+	
+	public boolean canRotate(){
+		return true;
+	}
+	
+	public boolean canMove(){
+		return true;
+	}
 		
 }

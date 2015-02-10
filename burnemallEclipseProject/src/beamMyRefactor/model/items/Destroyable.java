@@ -26,16 +26,18 @@ public class Destroyable extends Item {
 	Circle2D initialShape;
 	Circle2D shape;
 	
+	double inithealth;
 	double health = HP;
 	Color initCol;
 	double lastHit = 0;
 	boolean hit = false;
 
-	public Destroyable(Point2D center, double angle) {
+	public Destroyable(Point2D center, double angle, double radius) {
 		super(center, angle);
-		initialShape = new Circle2D(new Point2D(0, 0), 20);
+		initialShape = new Circle2D(new Point2D(0, 0), radius);
 		update();
 		initCol = new Color(color.getRed(), color.getGreen(), color.getBlue());
+		inithealth = HP;
 	}
 	
 	@Override
@@ -52,6 +54,7 @@ public class Destroyable extends Item {
 
 	@Override
 	public Collection<Beam> interact(Beam beam, Point2D intersect) {
+		LogUtil.logger.info("hitting !"+health/inithealth);
 		if(lastHit != 0)
 			health -= (System.currentTimeMillis()-lastHit)/1000*DPS;
 		lastHit = System.currentTimeMillis();

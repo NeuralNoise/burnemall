@@ -41,7 +41,7 @@ import beamMyRefactor.model.pathing.Waypoint;
 import beamMyRefactor.util.LocalProp;
 import beamMyRefactor.view.ViewPanel;
 
-public class EditController implements KeyListener, MouseMotionListener  {
+public class EditController implements KeyListener {
 	
 	/*
 	 * X : supprime
@@ -89,7 +89,6 @@ public class EditController implements KeyListener, MouseMotionListener  {
 		this.frame = frame;
 		this.view = view;
 		frame.addKeyListener(this);
-		view.addMouseMotionListener(this);
 	}
 
 	@Override
@@ -109,7 +108,7 @@ public class EditController implements KeyListener, MouseMotionListener  {
 			case 'R' : i = new Randomizer(modelPoint); break;
 			case 'O' : i = new RockObstacle(modelPoint); break;
 			case 'I' : i = new Wall(modelPoint); break;
-			case 'D' : i = new Destroyable(modelPoint, 0); break;
+			case 'D' : i = new Destroyable(modelPoint, 0, 10); break;
 			case 'E' : i = new RefractingArea(modelPoint, 100, 200, 0); break;
 			case 'T' : i = new TriDiffractor(modelPoint, 0); break;
 			case 'W' : i = new Wormhole(modelPoint); break;
@@ -146,6 +145,8 @@ public class EditController implements KeyListener, MouseMotionListener  {
 				break;
 			case 'q' : actualPath = null; break;
 			case 'n' : model.add(new SootBall(1, actualPath)); break;
+			case ' ' : model.restartWave(); break;
+			case 'r' : model.resetWave(); break;
 			}
 		}
 		
@@ -157,7 +158,6 @@ public class EditController implements KeyListener, MouseMotionListener  {
 				this.view = frame.getViewPanel();
 				this.cont = new Controller(model,view);
 				mode = Mode.NONE;
-				view.addMouseMotionListener(this);
 				cont.start();
 			} else if(e.getKeyCode()==KeyEvent.VK_S) {
 				try {
@@ -189,7 +189,6 @@ public class EditController implements KeyListener, MouseMotionListener  {
 						this.view = frame.getViewPanel();
 						this.cont = new Controller(model,view);
 						mode = Mode.NONE;
-						view.addMouseMotionListener(this);
 						cont.start();
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
@@ -201,29 +200,9 @@ public class EditController implements KeyListener, MouseMotionListener  {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyChar()=='m') {
-			mode = Mode.NONE;
-		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		if (e.getKeyChar()=='m') {
-			mode = Mode.MOVING;
-		}
 	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		if (mode==Mode.MOVING) {
-			Point2D screenPoint = new Point2D(e.getX(), e.getY());
-			model.getSelectedItem().move(model.transformFromScreenToModel(screenPoint));			
-		}
-	}
-
-
 }

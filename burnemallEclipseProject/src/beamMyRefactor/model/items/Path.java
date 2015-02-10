@@ -68,6 +68,16 @@ public class Path extends Item {
 		return res;
 	}
 	
+	@Override
+	public boolean canRotate() {
+		return false;
+	}
+	
+	@Override
+	public boolean canMove() {
+		return false;
+	}
+	
 	
 
 }

@@ -11,18 +11,16 @@ import java.util.List;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import tools.LogUtil;
 import beamMyRefactor.model.items.Item;
 import beamMyRefactor.model.items.ItemHolder;
 import beamMyRefactor.model.items.Path;
+import beamMyRefactor.model.items.SootBall;
 import beamMyRefactor.model.items.Wormhole;
+import beamMyRefactor.model.pathing.Wave;
 import beamMyRefactor.util.Recorder;
 import beamMyRefactor.util.StopWatch;
 
-/* 
- * Fix #22 <- test :)
- * Cette classe n'est pas si illisible? 170 lignes, essentiellement des getters/setters. Il reste une
- * méthode un peu compliquée. Je l'ai refactorée, commentée et j'ai renommé quelques variables. 
- */
 @Root
 public class Model {
 
@@ -32,8 +30,9 @@ public class Model {
 
 	@ElementList
 	private List<Item> items = new ArrayList<>();
+	
+	private Wave wave;
 
-	private List<Path> paths = new ArrayList<>();
 	private Item selectedItem = null;
 	private Item aimedItem;
 	
@@ -48,6 +47,7 @@ public class Model {
 	private Transform2D screen2model = null;
 
 	public Model() {
+		wave = new Wave(this);
 	}
 
 	// main method : this method updates the model and recomputes all beams for each frame
@@ -56,6 +56,7 @@ public class Model {
 		
 		// - clear all previous beams
 		laser.clear();
+		wave.update();
 		
 		// - first step : ask each item if it's able to produce beams and add these beams to the initial list
 		List<Beam> activeBeams = new ArrayList<>();
@@ -215,10 +216,28 @@ public class Model {
 		deleteItem(aimedItem);
 		aimedItem = null;
 	}
-	
-	public void addPath(Path p){
-		paths.add(p);
+
+	public void addToWave(SootBall sb){
+		LogUtil.logger.info("Adding ball at timer "+wave.addSootball(sb)/1000+" seconds."); 
 	}
 	
+	public void restartWave(){
+		LogUtil.logger.info("Wave restarted"); 
+		wave = new Wave(wave);
+		List<Item> toRemove = new ArrayList<>();
+		for(Item i : items)
+			if(i instanceof SootBall)
+				toRemove.add(i);
+		items.removeAll(toRemove);
+	}
+	public void resetWave(){
+		LogUtil.logger.info("Wave reset"); 
+		wave = new Wave(this);
+		List<Item> toRemove = new ArrayList<>();
+		for(Item i : items)
+			if(i instanceof SootBall)
+				toRemove.add(i);
+		items.removeAll(toRemove);
+	}
 }
 
