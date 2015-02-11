@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items;
+package beamMyRefactor.model.items.material;
 
 import geometry.Point2D;
 import geometry.Polyline2D;
@@ -22,7 +22,7 @@ import org.simpleframework.xml.Root;
 import beamMyRefactor.model.Beam;
 
 @Root
-public class TriDiffractor extends Item {
+public class TriDiffractor extends AbstractLightable {
 
 	private final static double WIDTH = 10;
 	
@@ -43,7 +43,7 @@ public class TriDiffractor extends Item {
 		pl.addPoint(Point2D.ORIGIN.getTranslation(2*Angle.FULL/3, WIDTH));
 		pl.addPoint(pl.getFirstPoint());
 		
-		Transform2D tr = new Transform2D(center, angle);
+		Transform2D tr = new Transform2D(coord, angle);
 		this.pl = pl.getTransformed(tr);
 	}
 

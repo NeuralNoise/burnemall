@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items.geometric;
+package beamMyRefactor.model.items.material.geometric;
 
 import geometry.Point2D;
 import org.simpleframework.xml.Element;
@@ -7,7 +7,10 @@ import org.simpleframework.xml.Root;
 @Root
 public class PositiveLens extends Lens {
 
-	public PositiveLens(@Element(name="center") Point2D center, @Element(name="angle") double angle, @Element(name="leftRadius") double leftRadius, @Element(name="leftRadius") double rightRadius){
+	public PositiveLens(@Element(name="center") Point2D center,
+			@Element(name="angle") double angle,
+			@Element(name="leftRadius") double leftRadius,
+			@Element(name="rightRadius") double rightRadius){
 		super(center, angle, leftRadius, rightRadius);
 		
 		// left diopter

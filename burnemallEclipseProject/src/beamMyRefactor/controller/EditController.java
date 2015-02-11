@@ -17,27 +17,27 @@ import math.Angle;
 import beamMyRefactor.MainFrame;
 import beamMyRefactor.model.Model;
 import beamMyRefactor.model.ModelSerializer;
-import beamMyRefactor.model.items.Beamer;
-import beamMyRefactor.model.items.Blackhole;
-import beamMyRefactor.model.items.Destroyable;
-import beamMyRefactor.model.items.Goal;
-import beamMyRefactor.model.items.Item;
-import beamMyRefactor.model.items.ItemHolder;
-import beamMyRefactor.model.items.Path;
-import beamMyRefactor.model.items.Randomizer;
-import beamMyRefactor.model.items.SootBall;
-import beamMyRefactor.model.items.TriDiffractor;
-import beamMyRefactor.model.items.Wormhole;
-import beamMyRefactor.model.items.geometric.FacetedMirror;
-import beamMyRefactor.model.items.geometric.Mirror;
-import beamMyRefactor.model.items.geometric.NegativeLens;
-import beamMyRefactor.model.items.geometric.PositiveLens;
-import beamMyRefactor.model.items.geometric.Prism;
-import beamMyRefactor.model.items.geometric.Raindrop;
-import beamMyRefactor.model.items.geometric.RefractingArea;
-import beamMyRefactor.model.items.geometric.RockObstacle;
-import beamMyRefactor.model.items.geometric.Wall;
-import beamMyRefactor.model.pathing.Waypoint;
+import beamMyRefactor.model.items.immaterial.ItemHolder;
+import beamMyRefactor.model.items.immaterial.Path;
+import beamMyRefactor.model.items.immaterial.Waypoint;
+import beamMyRefactor.model.items.material.AbstractLightable;
+import beamMyRefactor.model.items.material.Beamer;
+import beamMyRefactor.model.items.material.Blackhole;
+import beamMyRefactor.model.items.material.Destroyable;
+import beamMyRefactor.model.items.material.Goal;
+import beamMyRefactor.model.items.material.Randomizer;
+import beamMyRefactor.model.items.material.SootBall;
+import beamMyRefactor.model.items.material.TriDiffractor;
+import beamMyRefactor.model.items.material.Wormhole;
+import beamMyRefactor.model.items.material.geometric.FacetedMirror;
+import beamMyRefactor.model.items.material.geometric.Mirror;
+import beamMyRefactor.model.items.material.geometric.NegativeLens;
+import beamMyRefactor.model.items.material.geometric.PositiveLens;
+import beamMyRefactor.model.items.material.geometric.Prism;
+import beamMyRefactor.model.items.material.geometric.Raindrop;
+import beamMyRefactor.model.items.material.geometric.RefractingArea;
+import beamMyRefactor.model.items.material.geometric.RockObstacle;
+import beamMyRefactor.model.items.material.geometric.Wall;
 import beamMyRefactor.util.LocalProp;
 import beamMyRefactor.view.ViewPanel;
 
@@ -96,7 +96,7 @@ public class EditController implements KeyListener {
 		Point2D modelPoint = cont.modelPoint;
 		
 		if (e.isShiftDown()){
-			Item i = null;
+			AbstractLightable i = null;
 			switch(e.getKeyChar()){
 			case 'M' : i = new Mirror(modelPoint, 50, 0); break;
 			case 'B' : i = new Beamer(modelPoint, 0); break;
@@ -138,7 +138,7 @@ public class EditController implements KeyListener {
 				break;
 			case 'a' :
 				if(actualPath == null){
-					actualPath = new Path(modelPoint);
+					actualPath = new Path(modelPoint, model);
 					model.add(actualPath);
 				} else
 					actualPath.add(new Waypoint(modelPoint));

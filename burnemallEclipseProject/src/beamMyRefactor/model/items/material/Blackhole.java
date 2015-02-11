@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items;
+package beamMyRefactor.model.items.material;
 
 import geometry.Circle2D;
 import geometry.Line2D;
@@ -20,7 +20,7 @@ import beamMyRefactor.model.ModelUtil;
 import beamMyRefactor.util.Util;
 
 @Root
-public class Blackhole extends Item {
+public class Blackhole extends AbstractLightable {
 	
 	private static final double ORBIT_RADIUS = 30;
 	private static final double ATTRACTION_FORCE = 0.3;
@@ -55,7 +55,7 @@ public class Blackhole extends Item {
 			return null;
 		
 		Point2D beamVector = Point2D.ORIGIN.getTranslation(beam.getRay().getAngle(), 1);
-		Point2D attractionVector = Point2D.ORIGIN.getTranslation(new Line2D(intersect, center).getAngle(), ATTRACTION_FORCE*(1-intersect.getDistance(center)/ORBIT_RADIUS));
+		Point2D attractionVector = Point2D.ORIGIN.getTranslation(new Line2D(intersect, coord).getAngle(), ATTRACTION_FORCE*(1-intersect.getDistance(coord)/ORBIT_RADIUS));
 		
 		double ang = new Line2D(new Point2D(0, 0), beamVector.getAddition(attractionVector)).getAngle();
 		Beam res = new Beam(beam);
@@ -67,7 +67,7 @@ public class Blackhole extends Item {
 	protected void update() {
 		shape = new Circle2D(new Point2D(0, 0), 5);
 		orbit = new Circle2D(new Point2D(0, 0), ORBIT_RADIUS);
-		Transform2D tr = new Transform2D(center, angle);
+		Transform2D tr = new Transform2D(coord, angle);
 		shape = shape.getTransformed(tr);
 		orbit = orbit.getTransformed(tr);
 	}

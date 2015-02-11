@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items;
+package beamMyRefactor.model.items.material;
 
 import geometry.Point2D;
 import geometry.Polyline2D;
@@ -23,7 +23,7 @@ import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.MyColor;
 
 @Root
-public class Beamer extends Item {
+public class Beamer extends AbstractLightable {
 
 	private static final int LENGTH=20;
 	private static final int WIDTH=10;
@@ -45,14 +45,8 @@ public class Beamer extends Item {
 	private final static Stroke stroke = new BasicStroke(2);
 	private static final Color DRAW_COLOR = new Color(48,110,18);
 
-	public Beamer(double x, double y, double angle, MyColor color) {
-		super(x,y,angle);
-		this.color = color;
-		update();
-	}
-
-	public Beamer(@Element(name="center") Point2D center, @Element(name="angle") double angle) {
-		super(center,angle);
+	public Beamer(@Element(name="coord") Point2D coord, @Element(name="angle") double angle) {
+		super(coord, angle);
 		this.angle = angle;
 		update();
 	}
@@ -64,7 +58,7 @@ public class Beamer extends Item {
 		pl.addPoint(new Point2D(-LENGTH, WIDTH/2));
 		pl.addPoint(new Point2D(-LENGTH, -WIDTH/2));
 		pl.addPoint(new Point2D(0, 0));
-		Transform2D tr = new Transform2D(center, angle);
+		Transform2D tr = new Transform2D(coord, angle);
 		this.pl = pl.getTransformed(tr);
 	}
 		
@@ -90,14 +84,14 @@ public class Beamer extends Item {
 		List<Beam> res = new ArrayList<Beam>();
 		if (nbRays==1) {
 			Beam b = new Beam(color, rayWidth);
-			b.setRay (new Ray2D(center, angle));
+			b.setRay (new Ray2D(coord, angle));
 			res.add(b);
 		} else {
 			double step = spread/nbRays;
 			double start = angle-spread/2;
 			for (int i=0; i<nbRays; i++) {
 				Beam b = new Beam(color, rayWidth);
-				b.setRay (new Ray2D(center, start));
+				b.setRay (new Ray2D(coord, start));
 				b.setAsLight();
 				start+=step;
 				res.add(b);				
@@ -114,11 +108,11 @@ public class Beamer extends Item {
 			if(hasProduced)
 				return null;
 			res = new Beam(color, rayWidth);
-			res.setRay (new Ray2D(center, angle));
+			res.setRay (new Ray2D(coord, angle));
 		} else {
 			double start = angle-spread/2+spread*MyRandom.next();
 			res = new Beam(color, rayWidth);
-			res.setRay (new Ray2D(center, start));
+			res.setRay (new Ray2D(coord, start));
 			res.setAsLight();
 		}
 		hasProduced = true;

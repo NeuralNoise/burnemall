@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items.geometric;
+package beamMyRefactor.model.items.material.geometric;
 
 import geometry.Point2D;
 

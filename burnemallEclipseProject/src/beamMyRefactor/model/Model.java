@@ -6,38 +6,45 @@ import geometry.Transform2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+
+import math.MyRandom;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import tools.LogUtil;
-import beamMyRefactor.model.items.Item;
-import beamMyRefactor.model.items.ItemHolder;
-import beamMyRefactor.model.items.Path;
-import beamMyRefactor.model.items.SootBall;
-import beamMyRefactor.model.items.Wormhole;
+import beamMyRefactor.model.items.AbstractItem;
+import beamMyRefactor.model.items.immaterial.ItemHolder;
+import beamMyRefactor.model.items.immaterial.Path;
+import beamMyRefactor.model.items.material.AbstractLightable;
+import beamMyRefactor.model.items.material.SootBall;
+import beamMyRefactor.model.items.material.Wormhole;
+import beamMyRefactor.model.pathing.PathManager;
 import beamMyRefactor.model.pathing.Wave;
 import beamMyRefactor.util.Recorder;
 import beamMyRefactor.util.StopWatch;
 
 @Root
-public class Model {
+public class Model implements PathManager{
 
 	private static final double MIN_AUTO_HIT_DISTANCE = 0.00001;
 
 	public String fileName;
 
-	@ElementList
-	private List<Item> items = new ArrayList<>();
+	@ElementList(required=false)
+	private List<AbstractLightable> items = new ArrayList<>();
+	private List<Path> paths = new ArrayList<>();
+	private List<ItemHolder> holders = new ArrayList<>();
+	
 	
 	private Wave wave;
 
-	private Item selectedItem = null;
-	private Item aimedItem;
+	private AbstractItem selectedItem = null;
+	private AbstractItem aimedItem;
 	
 	
-	private List<ItemHolder> holders = new ArrayList<>();
 
 	// the laser object stores all beams
 	private Laser laser = new Laser();
@@ -60,7 +67,7 @@ public class Model {
 		
 		// - first step : ask each item if it's able to produce beams and add these beams to the initial list
 		List<Beam> activeBeams = new ArrayList<>();
-		for (Item i : items) {
+		for (AbstractLightable i : items) {
 			i.beforeTick();
 			Collection<Beam> b = i.produceBeam();
 			activeBeams.addAll(b);
@@ -73,10 +80,10 @@ public class Model {
 			producedBeams.clear();
 			// - for each active beam
 			for (Beam activeBeam : activeBeams) {
-				Item nearestItem = null;
+				AbstractLightable nearestItem = null;
 				double nearestDist = Double.MAX_VALUE;
 				// - find the nearest interacting item, if any
-				for (Item item : items) {
+				for (AbstractLightable item : items) {
 					Point2D intersect = item.intersect(activeBeam.ray);
 					if (intersect!=null) { 
 						double dist = intersect.getDistance(activeBeam.ray.getStart());
@@ -129,7 +136,7 @@ public class Model {
 		screen2model = tr; 
 	}
 
-	public void deleteItem(Item item) {		
+	public void deleteItem(AbstractItem item) {		
 		// ugly trick
 		if(item instanceof Wormhole)
 			items.remove(((Wormhole)item).getBinome());
@@ -140,11 +147,11 @@ public class Model {
 
 	}
 
-	public Item getNearestItem(Point2D point) {
-		Item res = null;
+	public AbstractItem getNearestItem(Point2D point) {
+		AbstractItem res = null;
 		double minDist = Double.MAX_VALUE;
-		for (Item m : items) {
-			double dist = point.getDistance(m.getCenter());
+		for (AbstractItem m : items) {
+			double dist = point.getDistance(m.getCoord());
 			if (dist<minDist) {
 				minDist = dist;
 				res = m;
@@ -153,28 +160,35 @@ public class Model {
 		return res;
 	}
 
-	public Collection<Item> getItems() {
+	public Collection<AbstractLightable> getItems() {
 		return Collections.unmodifiableList(items);
 	}
 
-	public void setSelectedItem(Item item) {
+	public void setSelectedItem(AbstractItem item) {
 		this.selectedItem = item;
 	}
 
-	public Item getSelectedItem() {
+	public AbstractItem getSelectedItem() {
 		return selectedItem;
 	}
 
-	public void add(Item item) {
+	public void add(AbstractLightable item) {
 		assert item!=null;
+		
+		// registering special items
 		if(item instanceof ItemHolder)
 			holders.add((ItemHolder)item);
+		if(item instanceof Path)
+			paths.add((Path)item);
+		
+		
 		// another ugly trick to link whormholes and itemholders
 		if(item instanceof Wormhole)
-			for(Item i : items)
+			for(AbstractItem i : items)
 				if(i instanceof Wormhole && ((Wormhole)i).isLone())
 					((Wormhole)i).link((Wormhole)item);
 		// end ugly trick
+		
 		if(selectedItem != null && selectedItem instanceof ItemHolder)
 			((ItemHolder)selectedItem).attach(item);
 		else
@@ -188,14 +202,14 @@ public class Model {
 	}
 
 	public void aimItem(Point2D point){
-		List<Item> all = new ArrayList<Item>();
+		List<AbstractLightable> all = new ArrayList<AbstractLightable>();
 		all.addAll(items);
 		for(ItemHolder h : holders)
 			all.addAll(h.getItems());
 		aimedItem = null;
 		double minDist = 20;
-		for (Item m : all) {
-			double dist = point.getDistance(m.getCenter());
+		for (AbstractItem m : all) {
+			double dist = point.getDistance(m.getCoord());
 			if (dist<minDist) {
 				minDist = dist;
 				aimedItem = m;
@@ -208,7 +222,7 @@ public class Model {
 			selectedItem = aimedItem;
 	}
 	
-	public Item getAimedItem(){
+	public AbstractItem getAimedItem(){
 		return aimedItem;
 	}
 
@@ -224,8 +238,8 @@ public class Model {
 	public void restartWave(){
 		LogUtil.logger.info("Wave restarted"); 
 		wave = new Wave(wave);
-		List<Item> toRemove = new ArrayList<>();
-		for(Item i : items)
+		List<AbstractLightable> toRemove = new ArrayList<>();
+		for(AbstractLightable i : items)
 			if(i instanceof SootBall)
 				toRemove.add(i);
 		items.removeAll(toRemove);
@@ -233,11 +247,36 @@ public class Model {
 	public void resetWave(){
 		LogUtil.logger.info("Wave reset"); 
 		wave = new Wave(this);
-		List<Item> toRemove = new ArrayList<>();
-		for(Item i : items)
+		List<AbstractLightable> toRemove = new ArrayList<>();
+		for(AbstractLightable i : items)
 			if(i instanceof SootBall)
 				toRemove.add(i);
 		items.removeAll(toRemove);
+	}
+
+	@Override
+	public int giveID() {
+		int id = 0;
+		while(true){
+			boolean available = true;
+			for(Path path : paths)
+				if(path.getID() == id){
+					available = false;
+					break;
+				}
+			if(available)
+				return id;
+			else
+				id++;
+		}
+	}
+
+	@Override
+	public Path getPath(int id) {
+		for(Path path : paths)
+			if(path.getID() == id)
+				return path;
+		throw new RuntimeException("String with id "+id+" doesn't exist.");
 	}
 }
 

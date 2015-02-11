@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items;
+package beamMyRefactor.model.items.immaterial;
 import geometry.Circle2D;
 import geometry.Point2D;
 import geometry.Ray2D;
@@ -8,20 +8,39 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+
 import beamMyRefactor.model.Beam;
-import beamMyRefactor.model.pathing.Waypoint;
+import beamMyRefactor.model.items.material.AbstractLightable;
+import beamMyRefactor.model.pathing.PathManager;
 
 
-public class Path extends Item {
+public class Path extends AbstractLightable {
 
+	@Element
+	private int id;
+	
+	@ElementList
 	List<Waypoint> waypoints = new ArrayList<>();
+	
+	
 	List<Circle2D> shape = new ArrayList<>();
 	List<Segment2D> segments = new ArrayList<>();
 	
-	public Path(Point2D startPoint) {
+	public Path(Point2D startPoint,
+			@Element(name="angle")double angle,
+			@Element(name="id")int id,
+			@ElementList(name="waypoints")List<Waypoint> waypoints) {
 		super(startPoint, 0);
-		waypoints.add(new Waypoint(startPoint));
-		shape.add(new Circle2D(startPoint, 2));
+		for(Waypoint wp : waypoints)
+			add(wp);
+		this.id = id;
+	}
+	
+	public Path(Point2D startPoint, PathManager manager){
+		this(startPoint, 0, manager.giveID(), new ArrayList<>());
+		add(new Waypoint(startPoint));
 	}
 
 	public Waypoint getNext(Waypoint w) {
@@ -38,8 +57,9 @@ public class Path extends Item {
 	
 	public void add(Waypoint wp){
 		waypoints.add(wp);
-		shape.add(new Circle2D(wp.coord, 2));
-		segments.add(new Segment2D(wp.coord, waypoints.get(waypoints.indexOf(wp)-1).coord));
+		shape.add(new Circle2D(wp.getCoord(), 2));
+		if(waypoints.size() > 1)
+			segments.add(new Segment2D(wp.getCoord(), waypoints.get(waypoints.indexOf(wp)-1).getCoord()));
 	}
 
 	@Override
@@ -76,6 +96,10 @@ public class Path extends Item {
 	@Override
 	public boolean canMove() {
 		return false;
+	}
+	
+	public int getID(){
+		return id;
 	}
 	
 	

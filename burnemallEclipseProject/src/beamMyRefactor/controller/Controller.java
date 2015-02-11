@@ -8,10 +8,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import beamMyRefactor.model.Model;
-import beamMyRefactor.model.items.Item;
-import beamMyRefactor.model.items.Path;
-import beamMyRefactor.model.items.SootBall;
-import beamMyRefactor.model.items.geometric.Mirror;
+import beamMyRefactor.model.items.AbstractItem;
+import beamMyRefactor.model.items.immaterial.Path;
+import beamMyRefactor.model.items.material.SootBall;
+import beamMyRefactor.model.items.material.geometric.Mirror;
 import beamMyRefactor.view.ViewPanel;
 
 public class Controller implements MouseListener, MouseMotionListener {
@@ -44,7 +44,7 @@ public class Controller implements MouseListener, MouseMotionListener {
 						while (true) {
 							try {
 								Thread.sleep(20);
-								Item sel = model.getSelectedItem();
+								AbstractItem sel = model.getSelectedItem();
 								if(action != Action.NONE && sel != null)
 									if(action == Action.RCLICK
 											&& sel.canRotate() &&
@@ -87,7 +87,7 @@ public class Controller implements MouseListener, MouseMotionListener {
 		model.selectAimed();
 		
 		if(model.getSelectedItem() != null)
-			drag = click.getDistance(model.getSelectedItem().center()) < 20 ? true : false;
+			drag = click.getDistance(model.getSelectedItem().getCoord()) < 20 ? true : false;
 
 		if (e.getButton()==3)
 			action = Action.CLICK;
@@ -108,7 +108,7 @@ public class Controller implements MouseListener, MouseMotionListener {
 	public void mouseDragged(MouseEvent e) {
 		Point2D click = model.transformFromScreenToModel(new Point2D(e.getX(), e.getY()));
 		if(model.getSelectedItem() != null){
-			Segment2D moment = new Segment2D(model.getSelectedItem().center(), click);
+			Segment2D moment = new Segment2D(model.getSelectedItem().getCoord(), click);
 			angle = moment.getAngle();
 		}
 		modelPoint = click;

@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items;
+package beamMyRefactor.model.items.material;
 
 import geometry.Circle2D;
 import geometry.Point2D;
@@ -18,7 +18,7 @@ import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.ModelUtil;
 
 @Root
-public class Destroyable extends Item {
+public class Destroyable extends AbstractLightable {
 	
 	private static final double HP = 100;
 	private static final double DPS = 5;
@@ -69,7 +69,7 @@ public class Destroyable extends Item {
 
 	@Override
 	protected void update() {
-		Transform2D tr = new Transform2D(center, angle);
+		Transform2D tr = new Transform2D(coord, angle);
 		shape = initialShape.getTransformed(tr);
 	}
 

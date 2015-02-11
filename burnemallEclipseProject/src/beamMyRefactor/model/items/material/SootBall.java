@@ -1,8 +1,9 @@
-package beamMyRefactor.model.items;
+package beamMyRefactor.model.items.material;
 
 import math.MyRandom;
 import tools.LogUtil;
-import beamMyRefactor.model.pathing.Waypoint;
+import beamMyRefactor.model.items.immaterial.Path;
+import beamMyRefactor.model.items.immaterial.Waypoint;
 import geometry.Point2D;
 
 public class SootBall extends Destroyable {
@@ -19,7 +20,7 @@ public class SootBall extends Destroyable {
 		this.maxSpeed = maxSpeed;
 		this.path = path;
 		actualWaypoint = path.get(0);
-		center = actualWaypoint.coord;
+		coord = actualWaypoint.getCoord();
 		health = 10;
 		inithealth = 10;
 		
@@ -29,7 +30,7 @@ public class SootBall extends Destroyable {
 		maxSpeed = other.maxSpeed;
 		path = other.path;
 		actualWaypoint = path.get(0);
-		center = actualWaypoint.coord;
+		coord = actualWaypoint.getCoord();
 		health = 10;
 		inithealth = 10;
 	}
@@ -44,17 +45,17 @@ public class SootBall extends Destroyable {
 		else
 			velocity = velocity.getAddition(steering).getScaled(maxSpeed);
 		
-		center = center.getAddition(velocity);
+		coord = coord.getAddition(velocity);
 		super.update();
 	}
 	
 	private Point2D followPath(){
-		Point2D target = actualWaypoint.coord;
-		if(center.getDistance(target) < 1)
+		Point2D target = actualWaypoint.getCoord();
+		if(coord.getDistance(target) < 1)
 			actualWaypoint = path.getNext(actualWaypoint);
 		
 		if(actualWaypoint != null)
-			return actualWaypoint.coord.getSubtraction(center).getTruncation(1);
+			return actualWaypoint.getCoord().getSubtraction(coord).getTruncation(1);
 		else
 			return Point2D.ORIGIN;
 	}

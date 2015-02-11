@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items.geometric;
+package beamMyRefactor.model.items.material.geometric;
 
 import geometry.Facet;
 import geometry.Point2D;
@@ -18,11 +18,11 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import beamMyRefactor.model.Beam;
-import beamMyRefactor.model.items.Item;
+import beamMyRefactor.model.items.material.AbstractLightable;
 import collections.FacetSerie;
 
 @Root
-public abstract class GeometricItem extends Item {
+public abstract class GeometricItem extends AbstractLightable {
 	
 	FacetSerie initialShape = new FacetSerie();
 	FacetSerie shape = new FacetSerie();
@@ -67,7 +67,7 @@ public abstract class GeometricItem extends Item {
 	protected void update() {
 		shape.clear();
 		for(Facet f : initialShape)
-			shape.add(f.getRotation(angle).getTranslation(center.x, center.y));
+			shape.add(f.getRotation(angle).getTranslation(coord.x, coord.y));
 	}
 	
 	@Override

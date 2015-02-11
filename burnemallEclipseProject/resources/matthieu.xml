@@ -1,3 +1,28 @@
 <model>
-   <items class="java.util.ArrayList"/>
+   <items class="java.util.ArrayList">
+      <abstractItem class="beamMyRefactor.model.items.immaterial.Path">
+         <angle>0.0</angle>
+         <id>0</id>
+         <waypoints class="java.util.ArrayList">
+            <waypoint>
+               <angle>0.0</angle>
+               <XMLCoord class="java.util.ArrayList">
+                  <double>197.0</double>
+                  <double>60.5</double>
+               </XMLCoord>
+            </waypoint>
+            <waypoint>
+               <angle>0.0</angle>
+               <XMLCoord class="java.util.ArrayList">
+                  <double>290.5</double>
+                  <double>84.0</double>
+               </XMLCoord>
+            </waypoint>
+         </waypoints>
+         <XMLCoord class="java.util.ArrayList">
+            <double>197.0</double>
+            <double>60.5</double>
+         </XMLCoord>
+      </abstractItem>
+   </items>
 </model>

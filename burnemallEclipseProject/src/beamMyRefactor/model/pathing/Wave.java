@@ -4,7 +4,7 @@ import java.util.List;
 
 import tools.LogUtil;
 import beamMyRefactor.model.Model;
-import beamMyRefactor.model.items.SootBall;
+import beamMyRefactor.model.items.material.SootBall;
 
 
 public class Wave {

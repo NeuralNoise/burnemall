@@ -25,7 +25,7 @@ import collections.FacetSerie;
 import tools.LogUtil;
 import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.Model;
-import beamMyRefactor.model.items.Item;
+import beamMyRefactor.model.items.AbstractItem;
 import beamMyRefactor.util.Prop;
 import beamMyRefactor.util.Recorder;
 import beamMyRefactor.util.StopWatch;
@@ -66,10 +66,10 @@ public class ViewPanel extends JPanel {
 			g.setStroke(SELECT_STROKE);
 			g.setColor(SELECT_COLOR);
 			if (model.getSelectedItem()!=null)
-				draw(g, model.getSelectedItem().center(), 25);
+				draw(g, model.getSelectedItem().getCoord(), 25);
 
 			// draw items
-			for (Item i : model.getItems()){
+			for (AbstractItem i : model.getItems()){
 				g.setStroke(new BasicStroke(i.getThickness()));
 				g.setColor(i.getColor());
 				draw(g, i.getShape());

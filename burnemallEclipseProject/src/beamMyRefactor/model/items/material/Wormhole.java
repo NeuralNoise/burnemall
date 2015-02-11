@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items;
+package beamMyRefactor.model.items.material;
 
 import geometry.Circle2D;
 import geometry.Point2D;
@@ -14,39 +14,59 @@ import org.simpleframework.xml.Root;
 
 import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.ModelUtil;
+import beamMyRefactor.util.Util;
 
 @Root
-public class Goal extends Item {
+public class Wormhole extends AbstractLightable {
 	
 	Circle2D shape;
-	boolean hit = true;
+	
+	Wormhole binome = null;
 
-	public Goal(@Element(name="center") Point2D center) {
+	public Wormhole(@Element(name="center") Point2D center) {
 		super(center, 0);
 		update();
 	}
 
 	@Override
 	public Point2D intersect(Ray2D beam) {
+		if(shape.isInside(beam.getStart()))
+			return null;
 		return ModelUtil.nearest(beam.getIntersection(shape).getAll(), beam.getStart());
 	}
 
 	@Override
 	public Collection<Beam> interact(Beam beam, Point2D intersect) {
-		hit = true;
-		return null;
+		if(binome == null)
+			return null;
+		Beam res = new Beam(beam);
+		res.setRay(new Ray2D(binome.coord, beam.getRay().getAngle()));
+		return Util.makeCollection(res);
 	}
 
 	@Override
 	protected void update() {
-		shape = new Circle2D(new Point2D(0, 0), 5);
-		Transform2D tr = new Transform2D(center, angle);
+		shape = new Circle2D(new Point2D(0, 0), 7.5);
+		
+		Transform2D tr = new Transform2D(coord, angle);
 		shape = shape.getTransformed(tr);
 	}
 
 	@Override
 	public void beforeTick() {
-		hit=false;
+	}
+	
+	public void link(Wormhole other){
+		binome = other;
+		other.binome = this;
+	}
+	
+	public boolean isLone(){
+		return binome == null;
+	}
+	
+	public Wormhole getBinome(){
+		return binome;
 	}
 	
 	@Override
