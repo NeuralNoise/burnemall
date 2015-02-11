@@ -6,12 +6,19 @@ import geometry.Ray2D;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import beamMyRefactor.model.Beam;
+import org.simpleframework.xml.Element;
+
 import beamMyRefactor.model.items.AbstractItem;
+import beamMyRefactor.model.lighting.Beam;
 
-public abstract class AbstractLightable extends AbstractItem {
+public abstract class AbstractPhotosensitive extends AbstractItem {
 
-	public AbstractLightable(Point2D coord, double angle) {
+	public AbstractPhotosensitive(@Element(name="angle")double angle) {
+		super(angle);
+	}
+
+	
+	public AbstractPhotosensitive(Point2D coord, double angle) {
 		super(coord, angle);
 	}
 

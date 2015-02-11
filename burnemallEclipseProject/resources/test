@@ -1,0 +1,320 @@
+<model>
+   <itemPool>
+      <allItems class="java.util.ArrayList">
+         <abstractItem class="beamMyRefactor.model.items.immaterial.Path">
+            <angle>0.0</angle>
+            <id>0</id>
+            <waypoints class="java.util.ArrayList">
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>207.0</double>
+                     <double>90.0</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>201.0</double>
+                     <double>102.0</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>300.5</double>
+                     <double>143.5</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>329.0</double>
+                     <double>193.5</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>247.5</double>
+                     <double>223.5</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>140.0</double>
+                     <double>195.5</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>101.5</double>
+                     <double>168.0</double>
+                  </XMLCoord>
+               </waypoint>
+            </waypoints>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.FacetedMirror">
+            <angle>0.0</angle>
+            <XMLCoord class="java.util.ArrayList">
+               <double>313.0</double>
+               <double>83.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Beamer" nbRays="1">
+            <angle>2.7970789563568617</angle>
+            <color>
+               <red>99</red>
+               <green>202</green>
+               <blue>235</blue>
+            </color>
+            <rayWidth>1</rayWidth>
+            <spread>0.0</spread>
+            <XMLCoord class="java.util.ArrayList">
+               <double>330.0</double>
+               <double>102.5</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Sootball">
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>326.9584579863542</double>
+               <double>193.89303054782496</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Sootball">
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>320.891577827936</double>
+               <double>179.4616715511548</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Sootball">
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>312.38891226940024</double>
+               <double>164.7407789695313</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Sootball">
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>304.1363251083787</double>
+               <double>150.45285381751094</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Sootball">
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>290.54357926065944</double>
+               <double>139.28589311475054</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Sootball">
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>279.953133519535</double>
+               <double>134.80343184840498</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Sootball">
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>275.80904605561676</double>
+               <double>133.04942526592185</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Sootball">
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>272.5858669170137</double>
+               <double>131.68519792399044</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Sootball">
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>269.8231419410682</double>
+               <double>130.51586020233495</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Sootball">
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>266.5999628024651</double>
+               <double>129.15163286040354</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Sootball">
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>263.376783663862</double>
+               <double>127.78740551847216</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.Sootball">
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>260.1536045252589</double>
+               <double>126.42317817654077</double>
+            </XMLCoord>
+         </abstractItem>
+      </allItems>
+   </itemPool>
+   <wave>
+      <sootballs class="java.util.ArrayList">
+         <sootball>
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <pathID>0</pathID>
+            <maxSpeed>0.5</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>207.0</double>
+               <double>90.0</double>
+            </XMLCoord>
+         </sootball>
+      </sootballs>
+      <timers class="java.util.ArrayList">
+         <long>346</long>
+         <long>1040</long>
+         <long>1718</long>
+         <long>2390</long>
+         <long>3122</long>
+         <long>3592</long>
+         <long>3763</long>
+         <long>3902</long>
+         <long>4034</long>
+         <long>4176</long>
+         <long>4316</long>
+         <long>4452</long>
+      </timers>
+   </wave>
+</model>

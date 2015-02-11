@@ -11,7 +11,7 @@ import java.util.Collection;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beamMyRefactor.model.Beam;
+import beamMyRefactor.model.lighting.Beam;
 import beamMyRefactor.util.Util;
 
 @Root

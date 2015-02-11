@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items.immaterial;
+package beamMyRefactor.model.items.material;
 
 import geometry.Circle2D;
 import geometry.Point2D;
@@ -17,15 +17,14 @@ import math.Angle;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
-import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.items.AbstractItem;
-import beamMyRefactor.model.items.material.AbstractLightable;
+import beamMyRefactor.model.lighting.Beam;
 
 
-public class ItemHolder extends AbstractLightable {
+public class ItemHolder extends AbstractPhotosensitive {
 	
 	@ElementList
-	List<AbstractLightable> items = new ArrayList<>();
+	List<AbstractItem> items = new ArrayList<>();
 	
 	@Element
 	double extent;
@@ -33,7 +32,7 @@ public class ItemHolder extends AbstractLightable {
 	Circle2D pivot;
 	Circle2D bound;
 	
-	AbstractLightable intersected;
+	AbstractPhotosensitive intersected;
 
 	public ItemHolder(@Element(name="center")Point2D center, @Element(name="angle")double angle, @Element(name="extent")double extent) {
 		super(center, angle);
@@ -41,13 +40,13 @@ public class ItemHolder extends AbstractLightable {
 		update();
 	}
 	
-	public void attach(AbstractLightable i){
+	public void attach(AbstractItem i){
 		double angle = new Segment2D(coord, i.getCoord()).getAngle();
 		i.move(coord.getTranslation(angle, extent));
 		items.add(i);
 	}
 	
-	public Collection<AbstractLightable> getItems(){
+	public Collection<AbstractItem> getItems(){
 		return items;
 	}
 
@@ -56,12 +55,15 @@ public class ItemHolder extends AbstractLightable {
 		double dist = Double.MAX_VALUE;
 		Point2D res = null;
 		intersected = null;
-		for(AbstractLightable i : items){
-			Point2D inter = i.intersect(ray);
-			if(inter != null && inter.getDistance(ray.getStart()) < dist){
-				dist = inter.getDistance(ray.getStart());
-				intersected = i;
-				res = inter;
+		for(AbstractItem i : items){
+			if(i instanceof AbstractPhotosensitive){
+				AbstractPhotosensitive ph = (AbstractPhotosensitive)i;
+				Point2D inter = ph.intersect(ray);
+				if(inter != null && inter.getDistance(ray.getStart()) < dist){
+					dist = inter.getDistance(ray.getStart());
+					intersected = ph;
+					res = inter;
+				}
 			}
 		}
 		return res;
@@ -104,8 +106,11 @@ public class ItemHolder extends AbstractLightable {
 	@Override
 	public Collection<Beam> produceBeam() {
 		ArrayList<Beam> res = new ArrayList<>();
-		for(AbstractLightable i : items)
-			res.addAll(i.produceBeam());
+		for(AbstractItem i : items)
+			if(i instanceof AbstractPhotosensitive){
+				AbstractPhotosensitive ph = (AbstractPhotosensitive)i;
+				res.addAll(ph.produceBeam());
+			}
 		return res;
 	}
 

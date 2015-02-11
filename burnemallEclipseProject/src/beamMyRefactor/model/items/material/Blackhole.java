@@ -15,12 +15,12 @@ import java.util.logging.Logger;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.ModelUtil;
+import beamMyRefactor.model.lighting.Beam;
 import beamMyRefactor.util.Util;
 
 @Root
-public class Blackhole extends AbstractLightable {
+public class Blackhole extends AbstractPhotosensitive {
 	
 	private static final double ORBIT_RADIUS = 30;
 	private static final double ATTRACTION_FORCE = 0.3;

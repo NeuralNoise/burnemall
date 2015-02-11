@@ -4,6 +4,6 @@ import beamMyRefactor.model.items.immaterial.Path;
 
 public interface PathManager {
 
-	public int giveID();
+	public int givePathID();
 	public Path getPath(int ID);
 }

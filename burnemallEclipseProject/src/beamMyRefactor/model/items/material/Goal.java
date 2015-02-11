@@ -12,11 +12,11 @@ import java.util.Collection;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.ModelUtil;
+import beamMyRefactor.model.lighting.Beam;
 
 @Root
-public class Goal extends AbstractLightable {
+public class Goal extends AbstractPhotosensitive {
 	
 	Circle2D shape;
 	boolean hit = true;

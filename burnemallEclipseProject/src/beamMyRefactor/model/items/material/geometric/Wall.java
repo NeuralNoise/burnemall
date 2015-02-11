@@ -7,10 +7,10 @@ import geometry.Point2D;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beamMyRefactor.model.Beam;
+import beamMyRefactor.model.lighting.Beam;
 
 @Root
-public class Wall extends GeometricItem {
+public class Wall extends AbstractGeometry {
 	
 	private static final double THICKNESS = 2.5;
 	private static final double EXTENT = 40;

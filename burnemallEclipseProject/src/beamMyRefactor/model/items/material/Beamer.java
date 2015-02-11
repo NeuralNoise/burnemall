@@ -19,11 +19,11 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.MyColor;
+import beamMyRefactor.model.lighting.Beam;
 
 @Root
-public class Beamer extends AbstractLightable {
+public class Beamer extends AbstractPhotosensitive {
 
 	private static final int LENGTH=20;
 	private static final int WIDTH=10;
@@ -45,7 +45,11 @@ public class Beamer extends AbstractLightable {
 	private final static Stroke stroke = new BasicStroke(2);
 	private static final Color DRAW_COLOR = new Color(48,110,18);
 
-	public Beamer(@Element(name="coord") Point2D coord, @Element(name="angle") double angle) {
+	public Beamer(@Element(name="angle") double angle) {
+		this(Point2D.ORIGIN, angle);
+	}
+	
+	public Beamer(Point2D coord, double angle) {
 		super(coord, angle);
 		this.angle = angle;
 		update();

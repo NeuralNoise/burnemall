@@ -12,11 +12,11 @@ import java.util.Random;
 
 import org.simpleframework.xml.Element;
 
-import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.ModelUtil;
+import beamMyRefactor.model.lighting.Beam;
 import beamMyRefactor.util.Util;
 
-public class Randomizer extends AbstractLightable {
+public class Randomizer extends AbstractPhotosensitive {
 
 	Circle2D shape;
 	

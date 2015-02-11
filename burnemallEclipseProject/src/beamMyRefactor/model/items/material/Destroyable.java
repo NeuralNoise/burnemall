@@ -14,11 +14,11 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import tools.LogUtil;
-import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.ModelUtil;
+import beamMyRefactor.model.lighting.Beam;
 
 @Root
-public class Destroyable extends AbstractLightable {
+public class Destroyable extends AbstractPhotosensitive {
 	
 	private static final double HP = 100;
 	private static final double DPS = 5;
@@ -54,7 +54,6 @@ public class Destroyable extends AbstractLightable {
 
 	@Override
 	public Collection<Beam> interact(Beam beam, Point2D intersect) {
-		LogUtil.logger.info("hitting !"+health/inithealth);
 		if(lastHit != 0)
 			health -= (System.currentTimeMillis()-lastHit)/1000*DPS;
 		lastHit = System.currentTimeMillis();

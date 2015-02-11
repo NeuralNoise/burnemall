@@ -11,11 +11,11 @@ import math.Angle;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beamMyRefactor.model.Beam;
+import beamMyRefactor.model.lighting.Beam;
 
 
 @Root
-public class Reflector extends GeometricItem {
+public class Reflector extends AbstractGeometry {
 
 	
 	public Reflector(@Element(name="center") Point2D center, @Element(name="angle") double angle) {

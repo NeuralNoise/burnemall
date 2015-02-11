@@ -1,28 +1,48 @@
 <model>
-   <items class="java.util.ArrayList">
-      <abstractItem class="beamMyRefactor.model.items.immaterial.Path">
-         <angle>0.0</angle>
-         <id>0</id>
-         <waypoints class="java.util.ArrayList">
-            <waypoint>
-               <angle>0.0</angle>
-               <XMLCoord class="java.util.ArrayList">
-                  <double>197.0</double>
-                  <double>60.5</double>
-               </XMLCoord>
-            </waypoint>
-            <waypoint>
-               <angle>0.0</angle>
-               <XMLCoord class="java.util.ArrayList">
-                  <double>290.5</double>
-                  <double>84.0</double>
-               </XMLCoord>
-            </waypoint>
-         </waypoints>
-         <XMLCoord class="java.util.ArrayList">
-            <double>197.0</double>
-            <double>60.5</double>
-         </XMLCoord>
-      </abstractItem>
-   </items>
+   <itemPool>
+      <allItems class="java.util.ArrayList">
+         <abstractItem class="beamMyRefactor.model.items.immaterial.Path">
+            <angle>0.0</angle>
+            <id>0</id>
+            <waypoints class="java.util.ArrayList">
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>94.5</double>
+                     <double>66.5</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>250.0</double>
+                     <double>79.5</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>335.5</double>
+                     <double>164.5</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>293.0</double>
+                     <double>226.5</double>
+                  </XMLCoord>
+               </waypoint>
+            </waypoints>
+            <XMLCoord class="java.util.ArrayList">
+               <double>94.5</double>
+               <double>66.5</double>
+            </XMLCoord>
+         </abstractItem>
+      </allItems>
+   </itemPool>
+   <wave>
+      <sootballs class="java.util.ArrayList"/>
+      <timers class="java.util.ArrayList"/>
+   </wave>
 </model>

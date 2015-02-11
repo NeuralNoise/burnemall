@@ -11,12 +11,13 @@ import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
-import beamMyRefactor.model.Beam;
-import beamMyRefactor.model.items.material.AbstractLightable;
+import beamMyRefactor.model.items.AbstractItem;
+import beamMyRefactor.model.items.material.AbstractPhotosensitive;
+import beamMyRefactor.model.lighting.Beam;
 import beamMyRefactor.model.pathing.PathManager;
 
 
-public class Path extends AbstractLightable {
+public class Path extends AbstractItem {
 
 	@Element
 	private int id;
@@ -28,18 +29,18 @@ public class Path extends AbstractLightable {
 	List<Circle2D> shape = new ArrayList<>();
 	List<Segment2D> segments = new ArrayList<>();
 	
-	public Path(Point2D startPoint,
-			@Element(name="angle")double angle,
+	public Path(@Element(name="angle")double angle,
 			@Element(name="id")int id,
 			@ElementList(name="waypoints")List<Waypoint> waypoints) {
-		super(startPoint, 0);
+		super(0);
 		for(Waypoint wp : waypoints)
 			add(wp);
 		this.id = id;
 	}
 	
 	public Path(Point2D startPoint, PathManager manager){
-		this(startPoint, 0, manager.giveID(), new ArrayList<>());
+		this(0, manager.givePathID(), new ArrayList<>());
+		coord = startPoint;
 		add(new Waypoint(startPoint));
 	}
 
@@ -60,18 +61,6 @@ public class Path extends AbstractLightable {
 		shape.add(new Circle2D(wp.getCoord(), 2));
 		if(waypoints.size() > 1)
 			segments.add(new Segment2D(wp.getCoord(), waypoints.get(waypoints.indexOf(wp)-1).getCoord()));
-	}
-
-	@Override
-	public Point2D intersect(Ray2D beam) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Collection<Beam> interact(Beam beam, Point2D intersect) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

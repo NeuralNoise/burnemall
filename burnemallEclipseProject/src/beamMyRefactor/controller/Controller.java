@@ -10,7 +10,7 @@ import java.awt.event.MouseMotionListener;
 import beamMyRefactor.model.Model;
 import beamMyRefactor.model.items.AbstractItem;
 import beamMyRefactor.model.items.immaterial.Path;
-import beamMyRefactor.model.items.material.SootBall;
+import beamMyRefactor.model.items.material.Sootball;
 import beamMyRefactor.model.items.material.geometric.Mirror;
 import beamMyRefactor.view.ViewPanel;
 
@@ -101,7 +101,7 @@ public class Controller implements MouseListener, MouseMotionListener {
 		model.aimItem(click);
 		action = Action.NONE;
 		if(model.getAimedItem() instanceof Path)
-			model.addToWave(new SootBall(0.5, (Path)model.getAimedItem()));
+			model.wave.summon(new Sootball(0.5, (Path)model.getAimedItem()));
 	}
 
 	@Override

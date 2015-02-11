@@ -17,16 +17,16 @@ import math.Angle;
 import beamMyRefactor.MainFrame;
 import beamMyRefactor.model.Model;
 import beamMyRefactor.model.ModelSerializer;
-import beamMyRefactor.model.items.immaterial.ItemHolder;
 import beamMyRefactor.model.items.immaterial.Path;
 import beamMyRefactor.model.items.immaterial.Waypoint;
-import beamMyRefactor.model.items.material.AbstractLightable;
+import beamMyRefactor.model.items.material.AbstractPhotosensitive;
 import beamMyRefactor.model.items.material.Beamer;
 import beamMyRefactor.model.items.material.Blackhole;
 import beamMyRefactor.model.items.material.Destroyable;
 import beamMyRefactor.model.items.material.Goal;
+import beamMyRefactor.model.items.material.ItemHolder;
 import beamMyRefactor.model.items.material.Randomizer;
-import beamMyRefactor.model.items.material.SootBall;
+import beamMyRefactor.model.items.material.Sootball;
 import beamMyRefactor.model.items.material.TriDiffractor;
 import beamMyRefactor.model.items.material.Wormhole;
 import beamMyRefactor.model.items.material.geometric.FacetedMirror;
@@ -81,7 +81,7 @@ public class EditController implements KeyListener {
 		System.out.println("    shit+w creates a wormhole (it will link with another lone wormhole if available)");
 		System.out.println("    shit+h creates a blackhole");
 		System.out.println("    shit+l creates a positive (converging) lens");
-		System.out.println("    shit+k creates a negative (diverging) lens");
+		System.out.println("    shit+k creates a negative (!ldiverging) lens");
 		System.out.println("    shit+p creates a prism");
 		System.out.println("    shit+s creates a raindrop");
 		this.cont = cont;
@@ -96,12 +96,12 @@ public class EditController implements KeyListener {
 		Point2D modelPoint = cont.modelPoint;
 		
 		if (e.isShiftDown()){
-			AbstractLightable i = null;
+			AbstractPhotosensitive i = null;
 			switch(e.getKeyChar()){
 			case 'M' : i = new Mirror(modelPoint, 50, 0); break;
 			case 'B' : i = new Beamer(modelPoint, 0); break;
 			case 'V' : i = new Beamer(modelPoint, 0);
-				((Beamer)i).setAsLight(50, Angle.toRadians(50));
+				((Beamer)i).setAsLight(100, Angle.toRadians(10));
 				break;
 			case 'A' : i = new FacetedMirror(modelPoint,0); break;
 			case 'G' : i = new Goal(modelPoint); break;
@@ -123,7 +123,7 @@ public class EditController implements KeyListener {
 			case '4' : i = new ItemHolder(modelPoint, 0, 160); break;
 			}
 			if(i != null){
-				model.add(i);
+				model.itemPool.register(i);
 				model.setSelectedItem(i);
 			}
 		} else {
@@ -132,21 +132,20 @@ public class EditController implements KeyListener {
 				if(model.getSelectedItem() != model.getAimedItem())
 					model.deleteAimed();
 				else {
-					model.deleteItem(model.getSelectedItem());
+					model.itemPool.unregister(model.getSelectedItem());
 					model.setSelectedItem(null);
 				}
 				break;
 			case 'a' :
 				if(actualPath == null){
-					actualPath = new Path(modelPoint, model);
-					model.add(actualPath);
+					actualPath = new Path(modelPoint, model.itemPool);
+					model.itemPool.register(actualPath);
 				} else
 					actualPath.add(new Waypoint(modelPoint));
 				break;
 			case 'q' : actualPath = null; break;
-			case 'n' : model.add(new SootBall(1, actualPath)); break;
-			case ' ' : model.restartWave(); break;
-			case 'r' : model.resetWave(); break;
+			case ' ' : model.wave.restart(); break;
+			case 'r' : model.wave.reset(); break;
 			}
 		}
 		

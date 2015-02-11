@@ -12,11 +12,11 @@ import java.util.Collection;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.ModelUtil;
+import beamMyRefactor.model.lighting.Beam;
 
 @Root
-public class RockObstacle extends GeometricItem {
+public class RockObstacle extends AbstractGeometry {
 	
 	private static final double SAMPLES = 8;
 	private static final double RADIUS = 5;

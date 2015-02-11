@@ -12,7 +12,7 @@ import org.simpleframework.xml.Root;
 
 @Root
 public abstract class AbstractItem {
-
+	
 	protected Point2D coord;
 	@Element
 	protected double angle;
@@ -20,8 +20,11 @@ public abstract class AbstractItem {
 	protected int thickness = 1;
 	protected Color color = Color.GRAY;
 
-	public AbstractItem(Point2D coord,
-			@Element(name="angle")double angle) {
+	public AbstractItem(@Element(name="angle")double angle) {
+		this.angle = angle;
+	}
+	
+	public AbstractItem(Point2D coord, double angle){
 		this.coord = coord;
 		this.angle = angle;
 	}
@@ -68,6 +71,7 @@ public abstract class AbstractItem {
 	@ElementList
 	public void setXMLCoord(List<Double> coords){
 		coord = new Point2D(coords.get(0), coords.get(1));
+		update();
 	}
 	
 	@ElementList

@@ -17,22 +17,26 @@ import math.Angle;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beamMyRefactor.model.Beam;
-import beamMyRefactor.model.items.material.AbstractLightable;
+import beamMyRefactor.model.items.material.AbstractPhotosensitive;
+import beamMyRefactor.model.lighting.Beam;
 import collections.FacetSerie;
 
 @Root
-public abstract class GeometricItem extends AbstractLightable {
+public abstract class AbstractGeometry extends AbstractPhotosensitive {
 	
+	public AbstractGeometry(@Element(name="angle")double angle) {
+		this(Point2D.ORIGIN, angle);
+	}
+	public AbstractGeometry(Point2D coord, double angle) {
+		super(coord, angle);
+	}
+	
+
 	FacetSerie initialShape = new FacetSerie();
 	FacetSerie shape = new FacetSerie();
 	
 	double collisionNormal;
 	private final static Stroke stroke = new BasicStroke(2);
-
-	public GeometricItem(@Element(name="center") Point2D center, @Element(name="angle")  double angle) {
-		super(center, angle);
-	}
 
 	@Override
 	public Point2D intersect(Ray2D ray) {

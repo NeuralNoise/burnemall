@@ -12,12 +12,12 @@ import java.util.Collection;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.ModelUtil;
+import beamMyRefactor.model.lighting.Beam;
 import beamMyRefactor.util.Util;
 
 @Root
-public class Wormhole extends AbstractLightable {
+public class Wormhole extends AbstractPhotosensitive {
 	
 	Circle2D shape;
 	

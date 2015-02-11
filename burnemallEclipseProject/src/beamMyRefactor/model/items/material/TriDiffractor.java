@@ -19,10 +19,10 @@ import math.Angle;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beamMyRefactor.model.Beam;
+import beamMyRefactor.model.lighting.Beam;
 
 @Root
-public class TriDiffractor extends AbstractLightable {
+public class TriDiffractor extends AbstractPhotosensitive {
 
 	private final static double WIDTH = 10;
 	

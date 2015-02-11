@@ -2,6 +2,7 @@ package beamMyRefactor.model.items.material.geometric;
 
 import geometry.Point2D;
 import geometry.Ray2D;
+
 import java.util.Collection;
 
 import math.Angle;
@@ -9,17 +10,21 @@ import math.Angle;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beamMyRefactor.model.Beam;
+import beamMyRefactor.model.lighting.Beam;
 import beamMyRefactor.util.Util;
 
 @Root
-public class FacetedMirror extends GeometricItem {
+public class FacetedMirror extends AbstractGeometry {
 	private static final double EXTENT = 40;
 	private static final int NB_FACES = 8;
 	private static final double ARC = Angle.toRadians(90);
 
-	public FacetedMirror(@Element(name="center")Point2D center, @Element(name="angle")double angle) {
-		super(center, angle);
+	public FacetedMirror(@Element(name="angle")double angle) {
+		this(Point2D.ORIGIN, angle);
+	}	
+	
+	public FacetedMirror(Point2D coord, double angle) {
+		super(coord, angle);
 
 		Point2D pivot;
 		if(ARC < Angle.FLAT){

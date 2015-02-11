@@ -16,11 +16,11 @@ import math.Angle;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import beamMyRefactor.model.Beam;
+import beamMyRefactor.model.lighting.Beam;
 import beamMyRefactor.util.Util;
 
 @Root
-public class Refractor extends GeometricItem {
+public class Refractor extends AbstractGeometry {
 
 	private static final int DISPERSED_RAYS = 20;
 	@Element

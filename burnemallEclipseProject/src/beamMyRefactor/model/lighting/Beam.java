@@ -1,5 +1,6 @@
-package beamMyRefactor.model;
+package beamMyRefactor.model.lighting;
 
+import beamMyRefactor.model.MyColor;
 import geometry.Point2D;
 import geometry.Ray2D;
 import geometry.Segment2D;

@@ -23,9 +23,9 @@ import javax.swing.JPanel;
 
 import collections.FacetSerie;
 import tools.LogUtil;
-import beamMyRefactor.model.Beam;
 import beamMyRefactor.model.Model;
 import beamMyRefactor.model.items.AbstractItem;
+import beamMyRefactor.model.lighting.Beam;
 import beamMyRefactor.util.Prop;
 import beamMyRefactor.util.Recorder;
 import beamMyRefactor.util.StopWatch;
@@ -69,7 +69,7 @@ public class ViewPanel extends JPanel {
 				draw(g, model.getSelectedItem().getCoord(), 25);
 
 			// draw items
-			for (AbstractItem i : model.getItems()){
+			for (AbstractItem i : model.itemPool.getAllAndHolded()){
 				g.setStroke(new BasicStroke(i.getThickness()));
 				g.setColor(i.getColor());
 				draw(g, i.getShape());
@@ -81,7 +81,7 @@ public class ViewPanel extends JPanel {
 			// draw light
 //			int i = 0;
 			for(int i=BEAM_GLOW_RADIUS; i>=0; i--){
-				for (Beam b : model.getLaser().beams()){
+				for (Beam b : model.lighter.getBeams()){
 					if(b.isLight()){
 						if(i!=0)
 							// to draw light rays only once.
@@ -103,7 +103,7 @@ public class ViewPanel extends JPanel {
 	        g.setComposite(opaque);
 			g.setColor(Color.lightGray);
 			g.setFont(new Font("Arial",Font.PLAIN,12));
-			g.drawString(Recorder.str()+"Beams : "+model.producedBeamCount, 0+4,  getHeight()-4);
+			g.drawString(Recorder.str()+"Beams : "+model.lighter.getBeams().size(), 0+4,  getHeight()-4);
 		}
 		Recorder.record(chrono);
 		
