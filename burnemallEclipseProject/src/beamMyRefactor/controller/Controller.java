@@ -10,7 +10,7 @@ import java.awt.event.MouseMotionListener;
 import beamMyRefactor.model.Model;
 import beamMyRefactor.model.items.AbstractItem;
 import beamMyRefactor.model.items.immaterial.Path;
-import beamMyRefactor.model.items.material.Sootball;
+import beamMyRefactor.model.items.material.circular.Sootball;
 import beamMyRefactor.model.items.material.geometric.Mirror;
 import beamMyRefactor.view.ViewPanel;
 

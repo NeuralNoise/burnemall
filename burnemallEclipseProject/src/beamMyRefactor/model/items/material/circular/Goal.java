@@ -1,12 +1,7 @@
-package beamMyRefactor.model.items.material;
+package beamMyRefactor.model.items.material.circular;
 
-import geometry.Circle2D;
 import geometry.Point2D;
 import geometry.Ray2D;
-import geometry.Transform2D;
-
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.Collection;
 
 import org.simpleframework.xml.Element;
@@ -16,13 +11,19 @@ import beamMyRefactor.model.ModelUtil;
 import beamMyRefactor.model.lighting.Beam;
 
 @Root
-public class Goal extends AbstractPhotosensitive {
+public class Goal extends AbstractCircular {
 	
-	Circle2D shape;
 	boolean hit = true;
 
-	public Goal(@Element(name="center") Point2D center) {
-		super(center, 0);
+	public Goal(@Element(name="angle")double angle,
+			@Element(name="radius") double radius) {
+		this(Point2D.ORIGIN, angle, radius);
+	}
+	public Goal(Point2D coord) {
+		this(coord, 0, 5);
+	}
+	public Goal(Point2D coord, double angle, double radius) {
+		super(coord, 0, radius);
 		update();
 	}
 
@@ -38,19 +39,7 @@ public class Goal extends AbstractPhotosensitive {
 	}
 
 	@Override
-	protected void update() {
-		shape = new Circle2D(new Point2D(0, 0), 5);
-		Transform2D tr = new Transform2D(coord, angle);
-		shape = shape.getTransformed(tr);
-	}
-
-	@Override
 	public void beforeTick() {
 		hit=false;
-	}
-	
-	@Override
-	public Object getShape() {
-		return shape;
 	}
 }

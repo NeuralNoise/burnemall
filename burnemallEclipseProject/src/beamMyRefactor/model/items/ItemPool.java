@@ -10,7 +10,7 @@ import org.simpleframework.xml.Root;
 import beamMyRefactor.model.items.immaterial.Path;
 import beamMyRefactor.model.items.material.AbstractPhotosensitive;
 import beamMyRefactor.model.items.material.ItemHolder;
-import beamMyRefactor.model.items.material.Sootball;
+import beamMyRefactor.model.items.material.circular.Sootball;
 import beamMyRefactor.model.pathing.PathManager;
 
 @Root

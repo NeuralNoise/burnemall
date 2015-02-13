@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items.material;
+package beamMyRefactor.model.items.material.geometric;
 
 import geometry.Point2D;
 import geometry.Polyline2D;
@@ -20,15 +20,14 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import beamMyRefactor.model.MyColor;
+import beamMyRefactor.model.items.material.AbstractPhotosensitive;
 import beamMyRefactor.model.lighting.Beam;
 
 @Root
-public class Beamer extends AbstractPhotosensitive {
+public class Beamer extends AbstractGeometry {
 
 	private static final int LENGTH=20;
 	private static final int WIDTH=10;
-	
-	public Polyline2D pl;
 	
 	@Element(required=false)
 	private MyColor color = MyColor.get("#63CAEB");
@@ -42,9 +41,6 @@ public class Beamer extends AbstractPhotosensitive {
 	@Element(required=false)
 	private double spread = 0;
 	
-	private final static Stroke stroke = new BasicStroke(2);
-	private static final Color DRAW_COLOR = new Color(48,110,18);
-
 	public Beamer(@Element(name="angle") double angle) {
 		this(Point2D.ORIGIN, angle);
 	}
@@ -52,30 +48,12 @@ public class Beamer extends AbstractPhotosensitive {
 	public Beamer(Point2D coord, double angle) {
 		super(coord, angle);
 		this.angle = angle;
+		initialShape.addPoint(new Point2D(0, 0));
+		initialShape.addPoint(new Point2D(-LENGTH, WIDTH/2));
+		initialShape.addPoint(new Point2D(-LENGTH, -WIDTH/2));
+		initialShape.addPoint(new Point2D(0, 0));
 		update();
 	}
-
-	@Override
-	protected void update() {
-		Polyline2D pl = new Polyline2D();
-		pl.addPoint(new Point2D(0, 0));
-		pl.addPoint(new Point2D(-LENGTH, WIDTH/2));
-		pl.addPoint(new Point2D(-LENGTH, -WIDTH/2));
-		pl.addPoint(new Point2D(0, 0));
-		Transform2D tr = new Transform2D(coord, angle);
-		this.pl = pl.getTransformed(tr);
-	}
-		
-	public double getAngle() {
-		return angle;
-	}
-
-	@Override
-	public Point2D intersect(Ray2D beam) {
-		// the beamer never interacts with the beam
-		return null;
-	}
-
 
 	@Override
 	public Collection<Beam> interact(Beam beam, Point2D intersect) {
@@ -104,33 +82,8 @@ public class Beamer extends AbstractPhotosensitive {
 		return res;
 	}
 
-	private boolean hasProduced = false;
-
-	public Beam produceSingleBeam(){
-		Beam res;
-		if (nbRays==1) {
-			if(hasProduced)
-				return null;
-			res = new Beam(color, rayWidth);
-			res.setRay (new Ray2D(coord, angle));
-		} else {
-			double start = angle-spread/2+spread*MyRandom.next();
-			res = new Beam(color, rayWidth);
-			res.setRay (new Ray2D(coord, start));
-			res.setAsLight();
-		}
-		hasProduced = true;
-		return res;
-	}
-	
 	public void setAsLight(int nbRays, double spreadAngle){
 		this.nbRays = nbRays;
 		this.spread = spreadAngle;
 	}
-	
-	@Override
-	public Polyline2D getShape() {
-		return pl;
-	}
-	
 }

@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items.material;
+package beamMyRefactor.model.items.material.circular;
 
 import geometry.Circle2D;
 import geometry.Line2D;
@@ -16,28 +16,34 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import beamMyRefactor.model.ModelUtil;
+import beamMyRefactor.model.items.material.AbstractPhotosensitive;
 import beamMyRefactor.model.lighting.Beam;
 import beamMyRefactor.util.Util;
 
 @Root
-public class Blackhole extends AbstractPhotosensitive {
+public class Blackhole extends AbstractCircular {
 	
 	private static final double ORBIT_RADIUS = 30;
 	private static final double ATTRACTION_FORCE = 0.3;
-	private static final double CURVE_RESOLUTION = 3;
+	private static final double CURVE_RESOLUTION = 5;
 	
-	Circle2D shape;
+	Circle2D initialOrbit;
 	Circle2D orbit;
+	public Blackhole(@Element(name="angle")double angle,
+			@Element(name="radius") double radius) {
+		this(Point2D.ORIGIN, angle, radius);
+	}
 
-	public Blackhole(@Element(name="center") Point2D center) {
-		super(center, 0);
+	public Blackhole(Point2D coord, double angle, double radius){
+		super(coord, angle);
+		initialOrbit = new Circle2D(new Point2D(0, 0), ORBIT_RADIUS);
 		update();
 	}
 
 	@Override
 	public Point2D intersect(Ray2D beam) {
 		// the ray have to be attracted in both situations : it intersect the orbit, or it is cast inside the orbit
-		if(orbit.isInside(beam.getStart()))
+		if(orbit.hasInside(beam.getStart()))
 			// ray is casted inside the orbit. We let it continue its course before attracting it
 			return beam.getStart().getTranslation(beam.getAngle(), CURVE_RESOLUTION);
 
@@ -51,13 +57,13 @@ public class Blackhole extends AbstractPhotosensitive {
 	@Override
 	public Collection<Beam> interact(Beam beam, Point2D intersect) {
 		// first check : beam is attracted inside the blackhole
-		if(shape.isInside(intersect))
+		if(shape.hasInside(intersect))
 			return null;
 		
 		Point2D beamVector = Point2D.ORIGIN.getTranslation(beam.getRay().getAngle(), 1);
 		Point2D attractionVector = Point2D.ORIGIN.getTranslation(new Line2D(intersect, coord).getAngle(), ATTRACTION_FORCE*(1-intersect.getDistance(coord)/ORBIT_RADIUS));
 		
-		double ang = new Line2D(new Point2D(0, 0), beamVector.getAddition(attractionVector)).getAngle();
+		double ang = beamVector.getAddition(attractionVector).getAngle();
 		Beam res = new Beam(beam);
 		res.setRay(new Ray2D(intersect, ang));
 		return Util.makeCollection(res);
@@ -65,15 +71,7 @@ public class Blackhole extends AbstractPhotosensitive {
 
 	@Override
 	protected void update() {
-		shape = new Circle2D(new Point2D(0, 0), 5);
-		orbit = new Circle2D(new Point2D(0, 0), ORBIT_RADIUS);
-		Transform2D tr = new Transform2D(coord, angle);
-		shape = shape.getTransformed(tr);
-		orbit = orbit.getTransformed(tr);
-	}
-	
-	@Override
-	public Object getShape() {
-		return shape;
+		super.update();
+		orbit = initialOrbit.getTransformed(getTranform());
 	}
 }

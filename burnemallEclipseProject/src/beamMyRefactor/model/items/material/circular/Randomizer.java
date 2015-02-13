@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items.material;
+package beamMyRefactor.model.items.material.circular;
 
 import geometry.Circle2D;
 import geometry.Point2D;
@@ -13,19 +13,25 @@ import java.util.Random;
 import org.simpleframework.xml.Element;
 
 import beamMyRefactor.model.ModelUtil;
+import beamMyRefactor.model.items.material.AbstractPhotosensitive;
 import beamMyRefactor.model.lighting.Beam;
 import beamMyRefactor.util.Util;
 
-public class Randomizer extends AbstractPhotosensitive {
+public class Randomizer extends AbstractCircular {
 
-	Circle2D shape;
-	
 	private long timeFrame = 0;
 	private Random rand = new Random();
 	private double angle;
 	
-	public Randomizer(@Element(name="center") Point2D center) {
-		super(center, 0);
+	public Randomizer(@Element(name="angle")double angle,
+			@Element(name="radius") double radius) {
+		this(Point2D.ORIGIN, angle, radius);
+	}
+	public Randomizer(Point2D coord) {
+		this(coord, 0, 5);
+	}
+	public Randomizer(Point2D coord, double angle, double radius) {
+		super(coord, 0, radius);
 		update();
 	}
 
@@ -43,20 +49,7 @@ public class Randomizer extends AbstractPhotosensitive {
 			this.timeFrame=timeFrame;
 			angle = rand.nextDouble()-0.5;
 		}
-		System.out.println(System.currentTimeMillis()/1000+" - " +angle);
 		res.setRay(new Ray2D(out, beam.getRay().getAngle()+angle));
 		return Util.makeCollection(res);
-	}
-
-	@Override
-	protected void update() {
-		shape = new Circle2D(new Point2D(0, 0), 5);
-		Transform2D tr = new Transform2D(coord, angle);
-		shape = shape.getTransformed(tr);
-	}
-	
-	@Override
-	public Object getShape() {
-		return shape;
 	}
 }

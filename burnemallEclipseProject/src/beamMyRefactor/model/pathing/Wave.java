@@ -9,7 +9,7 @@ import tools.LogUtil;
 import beamMyRefactor.model.Model;
 import beamMyRefactor.model.items.AbstractItem;
 import beamMyRefactor.model.items.ItemPool;
-import beamMyRefactor.model.items.material.Sootball;
+import beamMyRefactor.model.items.material.circular.Sootball;
 
 @Root
 public class Wave {

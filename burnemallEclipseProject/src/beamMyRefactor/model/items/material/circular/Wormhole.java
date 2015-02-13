@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items.material;
+package beamMyRefactor.model.items.material.circular;
 
 import geometry.Circle2D;
 import geometry.Point2D;
@@ -13,6 +13,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import beamMyRefactor.model.ModelUtil;
+import beamMyRefactor.model.items.material.AbstractPhotosensitive;
 import beamMyRefactor.model.lighting.Beam;
 import beamMyRefactor.util.Util;
 
@@ -30,7 +31,7 @@ public class Wormhole extends AbstractPhotosensitive {
 
 	@Override
 	public Point2D intersect(Ray2D beam) {
-		if(shape.isInside(beam.getStart()))
+		if(shape.hasInside(beam.getStart()))
 			return null;
 		return ModelUtil.nearest(beam.getIntersection(shape).getAll(), beam.getStart());
 	}

@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items.material;
+package beamMyRefactor.model.items.material.circular;
 
 import geometry.Circle2D;
 import geometry.Point2D;
@@ -15,29 +15,36 @@ import org.simpleframework.xml.Root;
 
 import tools.LogUtil;
 import beamMyRefactor.model.ModelUtil;
+import beamMyRefactor.model.items.material.AbstractPhotosensitive;
 import beamMyRefactor.model.lighting.Beam;
 
 @Root
-public class Destroyable extends AbstractPhotosensitive {
+public class Destroyable extends AbstractCircular {
 	
 	private static final double HP = 100;
 	private static final double DPS = 5;
 	
-	Circle2D initialShape;
-	Circle2D shape;
-	
 	double inithealth;
+
 	double health = HP;
 	Color initCol;
 	double lastHit = 0;
 	boolean hit = false;
+	
 
+	public Destroyable(@Element(name="angle")double angle,
+			@Element(name="radius") double radius) {
+		this(Point2D.ORIGIN, angle, radius);
+	}
+	public Destroyable(Point2D center, double radius) {
+		this(center, 0, radius);
+	}
 	public Destroyable(Point2D center, double angle, double radius) {
-		super(center, angle);
-		initialShape = new Circle2D(new Point2D(0, 0), radius);
-		update();
-		initCol = new Color(color.getRed(), color.getGreen(), color.getBlue());
+		super(center, angle, radius);
 		inithealth = HP;
+		initialShape = new Circle2D(new Point2D(0, 0), radius);
+		initCol = new Color(color.getRed(), color.getGreen(), color.getBlue());
+		update();
 	}
 	
 	@Override

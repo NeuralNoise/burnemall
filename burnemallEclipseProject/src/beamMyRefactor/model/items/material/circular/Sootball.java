@@ -1,4 +1,4 @@
-package beamMyRefactor.model.items.material;
+package beamMyRefactor.model.items.material.circular;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;

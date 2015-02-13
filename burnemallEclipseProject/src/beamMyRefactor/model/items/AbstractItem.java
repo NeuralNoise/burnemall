@@ -1,6 +1,7 @@
 package beamMyRefactor.model.items;
 
 import geometry.Point2D;
+import geometry.Transform2D;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -80,6 +81,10 @@ public abstract class AbstractItem {
 		res.add(coord.x);
 		res.add(coord.y);
 		return res;
+	}
+	
+	protected Transform2D getTranform(){
+		return new Transform2D(coord, angle);
 	}
 
 }
