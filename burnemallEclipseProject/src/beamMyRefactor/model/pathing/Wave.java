@@ -65,6 +65,7 @@ public class Wave {
 	public void restart(){
 		startTimer = System.currentTimeMillis();
 		itemPool.unregisterAllSootballs();
+		index = 0;
 	}
 	
 	public void reset(){

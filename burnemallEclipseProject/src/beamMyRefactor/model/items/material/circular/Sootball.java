@@ -47,6 +47,7 @@ public class Sootball extends Destroyable {
 	
 	@Override
 	public void update(){
+		super.update();
 		if(actualWaypoint == null)
 			return;
 		Point2D steering = followPath();

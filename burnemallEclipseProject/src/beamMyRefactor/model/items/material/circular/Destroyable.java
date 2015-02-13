@@ -4,6 +4,7 @@ import geometry.Circle2D;
 import geometry.Point2D;
 import geometry.Ray2D;
 import geometry.Transform2D;
+import geometry.intersection.Intersection;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -52,11 +53,11 @@ public class Destroyable extends AbstractCircular {
 		if(destroyed())
 			return null;
 		
-		List<Point2D> i = ray.getIntersection(shape).getAll();
-		if(!i.isEmpty())
+		Intersection intr = ray.getIntersection(shape);
+		if(intr.exist())
 			hit = true;
 		
-		return ModelUtil.nearest(i, ray.getStart());
+		return ModelUtil.nearest(intr.getAll(), ray.getStart());
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class Destroyable extends AbstractCircular {
 		lastHit = System.currentTimeMillis();
 		
 		if(!destroyed())
-			color = new Color(initCol.getRed()+(int)((1-health/HP)*(255-initCol.getRed())), initCol.getGreen(), initCol.getBlue());
+			color = new Color(initCol.getRed()+(int)((1-health/inithealth)*(255-initCol.getRed())), initCol.getGreen(), initCol.getBlue());
 		else
 			color = Color.DARK_GRAY;
 		
@@ -83,6 +84,7 @@ public class Destroyable extends AbstractCircular {
 	public void beforeTick() {
 		if(!hit)
 			lastHit = 0;
+		hit = false;
 	}
 	
 	boolean destroyed(){
