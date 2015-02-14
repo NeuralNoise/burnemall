@@ -25,8 +25,12 @@ public class Mirror extends Reflector {
 	@Element
 	private double width;
 	
-	public Mirror(@Element(name="center") Point2D center, @Element(name="width") double width, @Element(name="angle") double angle) {
-		super(center, angle);
+	public Mirror(@Element(name="width") double width, @Element(name="angle") double angle) {
+		this(Point2D.ORIGIN, width, angle);
+	}
+	
+	public Mirror(Point2D coord, double width, double angle) {
+		super(coord, angle);
 		this.width=width;
 		
 		initialShape.addPoint(0, width/5);

@@ -7,6 +7,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import tools.LogUtil;
 import beamMyRefactor.model.items.immaterial.Path;
 import beamMyRefactor.model.items.material.AbstractPhotosensitive;
 import beamMyRefactor.model.items.material.ItemHolder;
@@ -16,19 +17,12 @@ import beamMyRefactor.model.pathing.PathManager;
 @Root
 public class ItemPool implements PathManager{
 
-	@ElementList
 	public List<AbstractItem> allItems = new ArrayList<>();
-	
 	public List<AbstractPhotosensitive> photosensitives = new ArrayList<>();
 	public List<Path> paths = new ArrayList<>();
 	public List<Sootball> sootballs = new ArrayList<>();
 	public List<ItemHolder> holders = new ArrayList<>();
 	
-
-	public ItemPool(@ElementList(name="allItems")List<AbstractItem> items){
-		for(AbstractItem i : items)
-			register(i);
-	}
 
 	public ItemPool(){
 	}
@@ -103,7 +97,22 @@ public class ItemPool implements PathManager{
 		for(Path path : paths)
 			if(path.getID() == id)
 				return path;
-		throw new RuntimeException("String with id "+id+" doesn't exist.");
+		throw new RuntimeException("Path with id "+id+" doesn't exist.");
+	}
+	
+	@ElementList
+	public List<AbstractItem> getXMLItems(){
+		List<AbstractItem> res = new ArrayList<>();
+		for(AbstractItem i : allItems)
+			if(!(i instanceof Sootball))
+				res.add(i);
+		return res;
+	}
+	
+	@ElementList
+	public void setXMLItems(List<AbstractItem> list){
+		for(AbstractItem i : list)
+			register(i);
 	}
 
 	

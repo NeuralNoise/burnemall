@@ -1,0 +1,1010 @@
+<model>
+   <itemPool>
+      <XMLItems class="java.util.ArrayList">
+         <abstractItem class="beamMyRefactor.model.items.immaterial.Path">
+            <angle>0.0</angle>
+            <id>0</id>
+            <waypoints class="java.util.ArrayList">
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>1.5</double>
+                     <double>47.0</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>246.5</double>
+                     <double>46.0</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>290.5</double>
+                     <double>2.0</double>
+                  </XMLCoord>
+               </waypoint>
+            </waypoints>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Mirror">
+            <angle>-2.191045812777718</angle>
+            <width>50.0</width>
+            <XMLCoord class="java.util.ArrayList">
+               <double>290.0</double>
+               <double>61.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Beamer" nbRays="1">
+            <angle>2.93161914072763</angle>
+            <color>
+               <red>99</red>
+               <green>202</green>
+               <blue>235</blue>
+            </color>
+            <rayWidth>1</rayWidth>
+            <spread>0.0</spread>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>136.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Mirror">
+            <angle>1.8646656618273643</angle>
+            <width>50.0</width>
+            <XMLCoord class="java.util.ArrayList">
+               <double>56.0</double>
+               <double>116.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.immaterial.Path">
+            <angle>0.0</angle>
+            <id>1</id>
+            <waypoints class="java.util.ArrayList">
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>395.5</double>
+                     <double>243.0</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>218.5</double>
+                     <double>167.5</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>90.5</double>
+                     <double>296.5</double>
+                  </XMLCoord>
+               </waypoint>
+            </waypoints>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.immaterial.Path">
+            <angle>0.0</angle>
+            <id>2</id>
+            <waypoints class="java.util.ArrayList">
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>250.5</double>
+                     <double>297.0</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>114.0</double>
+                     <double>163.0</double>
+                  </XMLCoord>
+               </waypoint>
+               <waypoint>
+                  <angle>0.0</angle>
+                  <XMLCoord class="java.util.ArrayList">
+                     <double>1.5</double>
+                     <double>185.5</double>
+                  </XMLCoord>
+               </waypoint>
+            </waypoints>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>1.5735285604332352</angle>
+            <XMLCoord class="java.util.ArrayList">
+               <double>39.0</double>
+               <double>64.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>1.5740642890175713</angle>
+            <XMLCoord class="java.util.ArrayList">
+               <double>119.0</double>
+               <double>64.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>1.5677194134281294</angle>
+            <XMLCoord class="java.util.ArrayList">
+               <double>282.5</double>
+               <double>155.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>1.5707963267948966</angle>
+            <XMLCoord class="java.util.ArrayList">
+               <double>362.5</double>
+               <double>155.0</double>
+            </XMLCoord>
+         </abstractItem>
+      </XMLItems>
+   </itemPool>
+   <wave>
+      <sootballs class="java.util.ArrayList">
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>0</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>1.5</double>
+               <double>47.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>7.0</radius>
+            <pathID>1</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>395.5</double>
+               <double>243.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>8.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>6.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+         <sootball>
+            <angle>0.0</angle>
+            <radius>5.0</radius>
+            <pathID>2</pathID>
+            <maxSpeed>0.3</maxSpeed>
+            <XMLCoord class="java.util.ArrayList">
+               <double>250.5</double>
+               <double>297.0</double>
+            </XMLCoord>
+         </sootball>
+      </sootballs>
+      <timers class="java.util.ArrayList">
+         <long>4171</long>
+         <long>5149</long>
+         <long>6160</long>
+         <long>7151</long>
+         <long>8164</long>
+         <long>9130</long>
+         <long>10236</long>
+         <long>11186</long>
+         <long>12108</long>
+         <long>13054</long>
+         <long>13972</long>
+         <long>12829</long>
+         <long>15063</long>
+         <long>16019</long>
+         <long>17029</long>
+         <long>17985</long>
+         <long>19003</long>
+         <long>19972</long>
+         <long>20924</long>
+         <long>21910</long>
+         <long>22914</long>
+         <long>23880</long>
+         <long>24824</long>
+         <long>25780</long>
+         <long>26794</long>
+         <long>27819</long>
+         <long>22823</long>
+         <long>28936</long>
+         <long>29890</long>
+         <long>30893</long>
+         <long>31933</long>
+         <long>32879</long>
+         <long>33765</long>
+         <long>34613</long>
+         <long>35483</long>
+         <long>36355</long>
+         <long>37215</long>
+         <long>38059</long>
+         <long>38971</long>
+         <long>39870</long>
+         <long>36512</long>
+         <long>40606</long>
+         <long>41722</long>
+         <long>42864</long>
+         <long>44048</long>
+         <long>45210</long>
+         <long>46334</long>
+         <long>47476</long>
+         <long>48646</long>
+         <long>49810</long>
+         <long>51005</long>
+         <long>52221</long>
+         <long>53333</long>
+         <long>54414</long>
+         <long>55562</long>
+         <long>56664</long>
+         <long>57722</long>
+         <long>58808</long>
+         <long>59876</long>
+         <long>60963</long>
+         <long>62024</long>
+         <long>63183</long>
+         <long>64298</long>
+         <long>65324</long>
+         <long>66457</long>
+         <long>67845</long>
+         <long>68925</long>
+         <long>70083</long>
+         <long>71204</long>
+         <long>72264</long>
+         <long>73368</long>
+         <long>74466</long>
+         <long>75545</long>
+         <long>76614</long>
+         <long>77680</long>
+         <long>78696</long>
+         <long>79690</long>
+      </timers>
+   </wave>
+</model>

@@ -96,7 +96,7 @@ public class Controller implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 		action = Action.NONE;
 		if(model.getAimedItem() instanceof Path)
-			model.wave.summon(new Sootball(0.5, (Path)model.getAimedItem()));
+			model.wave.summon(new Sootball(0.3, (Path)model.getAimedItem()));
 	}
 
 	@Override

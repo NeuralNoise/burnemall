@@ -18,8 +18,11 @@ import beamMyRefactor.model.lighting.Beam;
 public class Reflector extends AbstractGeometry {
 
 	
-	public Reflector(@Element(name="center") Point2D center, @Element(name="angle") double angle) {
-		super(center, angle);
+	public Reflector(@Element(name="angle") double angle) {
+		this(Point2D.ORIGIN, angle);
+	}
+	public Reflector(Point2D coord, double angle) {
+		super(coord, angle);
 	}
 
 

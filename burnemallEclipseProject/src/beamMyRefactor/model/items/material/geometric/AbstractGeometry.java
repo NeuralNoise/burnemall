@@ -17,6 +17,7 @@ import math.Angle;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import tools.LogUtil;
 import beamMyRefactor.model.items.material.AbstractPhotosensitive;
 import beamMyRefactor.model.lighting.Beam;
 import collections.FacetSerie;

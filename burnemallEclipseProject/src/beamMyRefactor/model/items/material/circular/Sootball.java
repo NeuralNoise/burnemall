@@ -8,10 +8,12 @@ import tools.LogUtil;
 import beamMyRefactor.model.items.ItemPool;
 import beamMyRefactor.model.items.immaterial.Path;
 import beamMyRefactor.model.items.immaterial.Waypoint;
+import beamMyRefactor.model.pathing.PathManager;
 import geometry.Point2D;
 
 @Root
 public class Sootball extends Destroyable {
+	private static final double HEALTH = 5;
 	
 	@Element
 	int pathID;
@@ -24,8 +26,10 @@ public class Sootball extends Destroyable {
 	Point2D velocity = Point2D.ORIGIN;
 	
 	public Sootball(@Element(name="maxSpeed")double maxSpeed,
-			@Element(name="pathID")int pathID){
-		super(Point2D.ORIGIN, 0, MyRandom.between(5, 9));
+			@Element(name="pathID")int pathID,
+			@Element(name="angle")double angle,
+			@Element(name="radius") double radius){
+		super(Point2D.ORIGIN, angle, radius);
 		this.maxSpeed = maxSpeed;
 		this.pathID = pathID;
 	}
@@ -37,9 +41,8 @@ public class Sootball extends Destroyable {
 		pathID = path.getID();
 		actualWaypoint = path.get(0);
 		coord = actualWaypoint.getCoord();
-		health = 10;
-		inithealth = 10;
-		
+		inithealth = HEALTH;
+		health = inithealth;
 	}
 	public Sootball(Sootball other){
 		this(other.maxSpeed, other.path);
@@ -78,12 +81,8 @@ public class Sootball extends Destroyable {
 			update();
 	}
 	
-	public void findPath(ItemPool pool){
-		for(Path p : pool.paths)
-			if(p.getID() == pathID){
-				path = p;
-				actualWaypoint = path.get(0);
-				break;
-			}
+	public void findPath(PathManager pm){
+		path = pm.getPath(pathID);
+		actualWaypoint = path.get(0);
 	}
 }

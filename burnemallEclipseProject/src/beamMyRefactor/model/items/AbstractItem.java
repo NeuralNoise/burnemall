@@ -11,6 +11,8 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import tools.LogUtil;
+
 @Root
 public abstract class AbstractItem {
 	
@@ -70,13 +72,13 @@ public abstract class AbstractItem {
 	}
 	
 	@ElementList
-	public void setXMLCoord(List<Double> coords){
+	public final void setXMLCoord(List<Double> coords){
 		coord = new Point2D(coords.get(0), coords.get(1));
 		update();
 	}
 	
 	@ElementList
-	public List<Double> getXMLCoord(){
+	public final List<Double> getXMLCoord(){
 		List<Double> res = new ArrayList<>();
 		res.add(coord.x);
 		res.add(coord.y);

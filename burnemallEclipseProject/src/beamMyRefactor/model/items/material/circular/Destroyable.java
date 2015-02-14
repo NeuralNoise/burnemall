@@ -62,8 +62,10 @@ public class Destroyable extends AbstractCircular {
 
 	@Override
 	public Collection<Beam> interact(Beam beam, Point2D intersect) {
-		if(lastHit != 0)
+		if(lastHit != 0){
 			health -= (System.currentTimeMillis()-lastHit)/1000*DPS;
+			health = Math.max(health, 0);
+		}
 		lastHit = System.currentTimeMillis();
 		
 		if(!destroyed())

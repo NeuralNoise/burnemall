@@ -55,11 +55,17 @@ public class Wave {
 	}
 	
 	public long summon(Sootball sb){
-		sootballs.add(sb);
-		long t = System.currentTimeMillis()-startTimer;
-		timers.add(t);
+		long time = System.currentTimeMillis()-startTimer;
+		int i = 0;
+		for(Long t : timers){
+			if(t>time)
+				break;
+			i++;
+		}
+		sootballs.add(i, sb);
+		timers.add(i, time);
 		LogUtil.logger.info("nb ball : "+sootballs.size());
-		return t;
+		return time;
 	}
 	
 	public void restart(){

@@ -101,13 +101,13 @@ public class EditController implements KeyListener {
 			case 'M' : i = new Mirror(modelPoint, 50, 0); break;
 			case 'B' : i = new Beamer(modelPoint, 0); break;
 			case 'V' : i = new Beamer(modelPoint, 0);
-				((Beamer)i).setAsLight(100, Angle.toRadians(10));
+				((Beamer)i).setAsLight(1000, Angle.toRadians(360));
 				break;
 			case 'A' : i = new FacetedMirror(modelPoint,0); break;
 			case 'G' : i = new Goal(modelPoint); break;
 			case 'R' : i = new Randomizer(modelPoint); break;
 			case 'O' : i = new RockObstacle(modelPoint); break;
-			case 'I' : i = new Wall(modelPoint); break;
+			case 'I' : i = new Wall(modelPoint, 0); break;
 			case 'D' : i = new Destroyable(modelPoint, 0, 10); break;
 			case 'E' : i = new RefractingArea(modelPoint, 100, 200, 0); break;
 			case 'T' : i = new TriDiffractor(modelPoint, 0); break;
