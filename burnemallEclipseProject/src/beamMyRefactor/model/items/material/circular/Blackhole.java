@@ -43,7 +43,7 @@ public class Blackhole extends AbstractCircular {
 	@Override
 	public Point2D intersect(Ray2D beam) {
 		// the ray have to be attracted in both situations : it intersect the orbit, or it is cast inside the orbit
-		if(orbit.hasInside(beam.getStart()))
+		if(orbit.isInside(beam.getStart()))
 			// ray is casted inside the orbit. We let it continue its course before attracting it
 			return beam.getStart().getTranslation(beam.getAngle(), CURVE_RESOLUTION);
 
@@ -57,7 +57,7 @@ public class Blackhole extends AbstractCircular {
 	@Override
 	public Collection<Beam> interact(Beam beam, Point2D intersect) {
 		// first check : beam is attracted inside the blackhole
-		if(shape.hasInside(intersect))
+		if(shape.isInside(intersect))
 			return null;
 		
 		Point2D beamVector = Point2D.ORIGIN.getTranslation(beam.getRay().getAngle(), 1);

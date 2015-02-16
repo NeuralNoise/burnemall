@@ -17,7 +17,7 @@ public class Locator {
 			 * public class LocalProp {
 			 * public static final String RESOURCES_PATH="C:\\Users\\matthieu.dumas\\git\\Beam\\BeamEclipseProject\\resources"; 	
 			 * public static final String DEFAULT_LOAD = "matthieu.xml";
-			 * }
+			 * } 
 			 */
 			base = new File(LocalProp.RESOURCES_PATH);
 			if (!base.isDirectory())
