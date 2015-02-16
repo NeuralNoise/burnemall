@@ -31,7 +31,7 @@ public class Wormhole extends AbstractPhotosensitive {
 
 	@Override
 	public Point2D intersect(Ray2D beam) {
-		if(shape.isInside(beam.getStart()))
+		if(shape.hasInside(beam.getStart()))
 			return null;
 		return ModelUtil.nearest(beam.getIntersection(shape).getAll(), beam.getStart());
 	}
