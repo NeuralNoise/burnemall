@@ -1,6 +1,7 @@
 package beamMyRefactor.model.lighting;
 
 import geometry.Point2D;
+import geometry.Segment2D;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -86,11 +87,14 @@ public class Lighter {
 	
 	public void enlightMap(Beam beam){
 		Point2D p = beam.ray.getStart();
-		while(beam.ray.contains(p)){
-			lightmap.drawCircle(p, 5, beam.intensity);
-			p = p.getTranslation(beam.ray.getAngle(), 5);
+		double beamlength = beam.getSegment().getLength();
+		int i = 1;
+		while(p.getDistance(beam.ray.getStart()) < beamlength){
+			lightmap.drawCircle(p, i, beam.intensity);
+			p = p.getTranslation(beam.ray.getAngle(), i);
+			i++;
 			if(!lightmap.isInBounds((int)p.x, (int)p.y))
-					break;
+				break;
 		}
 		
 	}

@@ -8,7 +8,7 @@ import geometry.Segment2D;
 public class Beam {
 
 	private static final double FAR = 500.0;
-	private static final int MAX_INTERACT = 20;
+	private static final int MAX_INTERACT = 3;
 	
 	Ray2D ray;
 	Point2D endPoint;

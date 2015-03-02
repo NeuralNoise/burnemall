@@ -46,7 +46,7 @@ public class ViewPanel extends JPanel {
 		setPreferredSize(new Dimension(Prop.PANEL_WIDTH, Prop.PANEL_HEIGHT));
 		
 		toScreenTransform = new Transform2D();
-		toScreenTransform.setScale(2, 2);
+		toScreenTransform.setScale(1, 1);
 //		toScreenTransform.setTranslation(100, 100);
 		
 		model.putToModelTransform(toScreenTransform.getInverse());
@@ -96,7 +96,7 @@ public class ViewPanel extends JPanel {
 				        transp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max((float)b.intensity, 0.08f));
 				        g.setComposite(transp);
 					}
-					draw(g, b.getSegment());
+//					draw(g, b.getSegment());
 				}
 //			}
 	        
