@@ -15,7 +15,6 @@ import beamMyRefactor.view.ViewPanel;
 public class BeamMain {
 
 	public static void main(String[] args) throws Exception {
-
 		Logger.getLogger("").setLevel(Level.INFO);
 		LogUtil.init();
 		Model model=null;

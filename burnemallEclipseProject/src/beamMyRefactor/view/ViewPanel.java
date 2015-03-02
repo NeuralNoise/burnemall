@@ -79,8 +79,8 @@ public class ViewPanel extends JPanel {
 	        Composite opaque = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
 
 			// draw light
-//			int i = 0;
-			for(int i=BEAM_GLOW_RADIUS; i>=0; i--){
+			int i = 0;
+//			for(int i=BEAM_GLOW_RADIUS; i>=0; i--){
 				for (Beam b : model.lighter.getBeams()){
 					if(b.isLight()){
 						if(i!=0)
@@ -98,8 +98,15 @@ public class ViewPanel extends JPanel {
 					}
 					draw(g, b.getSegment());
 				}
-			}
-			
+//			}
+	        
+	        g.setComposite(transp);
+	        for(int x=0; x<model.lighter.lightmap.xSize(); x++)
+	        	for(int y=0; y<model.lighter.lightmap.ySize(); y++){
+	        		g.setColor(new Color(1f, 1f, 1f, model.lighter.lightmap.get(x, y).floatValue()));
+	        		draw(g, new Point2D(x, y));
+	        	}
+	    			
 	        g.setComposite(opaque);
 			g.setColor(Color.lightGray);
 			g.setFont(new Font("Arial",Font.PLAIN,12));
@@ -131,6 +138,13 @@ public class ViewPanel extends JPanel {
 				(int)Math.round(c.radius*2));
 	}
 	
+	private void draw(Graphics2D g, Point2D p){
+		p = p.getTransformed(toScreenTransform);
+		g.drawLine((int)Math.round(p.x),
+				(int)Math.round(p.y),
+				(int)Math.round(p.x),
+				(int)Math.round(p.y));
+	}
 	private void draw(Graphics2D g, Segment2D s){
 		s = s.getTransformed(toScreenTransform);
 		g.drawLine((int)Math.round(s.getStart().x),

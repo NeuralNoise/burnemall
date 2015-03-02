@@ -9,6 +9,7 @@ import java.util.List;
 import beamMyRefactor.model.items.AbstractItem;
 import beamMyRefactor.model.items.ItemPool;
 import beamMyRefactor.model.items.material.AbstractPhotosensitive;
+import beamMyRefactor.util.Prop;
 
 
 public class Lighter {
@@ -16,12 +17,15 @@ public class Lighter {
 
 	private List<Beam> beams = new ArrayList<>();
 	final ItemPool pool;
+	public final Lightmap lightmap;
 	
 	public Lighter(ItemPool pool){
+		lightmap = new Lightmap(Prop.PANEL_WIDTH, Prop.PANEL_HEIGHT);
 		this.pool = pool;
 	}
 	
 	public void castLight(){
+		lightmap.clear();
 		beams.clear();
 		// - first step : ask each item if it's able to produce beams and add these beams to the initial list
 		List<Beam> activeBeams = new ArrayList<>();
@@ -65,6 +69,7 @@ public class Lighter {
 					// - if no intersecting item, store activeBeam as an infinite ray  
 					beams.add(activeBeam);
 				}
+				enlightMap(activeBeam);
 			}
 			// - end of active beams, produced beams become active
 			activeBeams.clear();
@@ -77,5 +82,16 @@ public class Lighter {
 	
 	public List<Beam> getBeams(){
 		return beams;
+	}
+	
+	public void enlightMap(Beam beam){
+		Point2D p = beam.ray.getStart();
+		while(beam.ray.contains(p)){
+			lightmap.drawCircle(p, 5, beam.intensity);
+			p = p.getTranslation(beam.ray.getAngle(), 5);
+			if(!lightmap.isInBounds((int)p.x, (int)p.y))
+					break;
+		}
+		
 	}
 }
