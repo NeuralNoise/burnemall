@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javafx.scene.input.TouchPoint;
 import tools.LogUtil;
 import beamMyRefactor.model.Model;
 import beamMyRefactor.model.items.AbstractItem;
@@ -48,28 +49,28 @@ public class Controller implements MouseListener, MouseMotionListener {
 					@Override
 					public void run() {
 						while (true) {
-							try {
-								Thread.sleep(20);
-								AbstractItem sel = model.getSelectedItem();
-								if(action != Action.NONE && sel != null)
-									if(action == Action.RCLICK
-											&& sel.canRotate() &&
-											pressionTime+100 < System.currentTimeMillis()){
-											model.getSelectedItem().setAngle(angle);
-									} else if(drag && 
-											sel.canMove())
-										model.getSelectedItem().move(modelPoint);
-								model.tick();
-
-								double elpasedTime = System.currentTimeMillis()-lastRepaint;
-								if(elpasedTime > 1000/fps){
-									view.repaint();
-									lastRepaint = System.currentTimeMillis();
+							AbstractItem sel = model.getSelectedItem();
+							if(action != Action.NONE && sel != null){
+								boolean toUpdate = false;
+								if(action == Action.RCLICK
+										&& sel.canRotate() &&
+										pressionTime+100 < System.currentTimeMillis()){
+									model.getSelectedItem().setAngle(angle);
+									toUpdate = true;
+								} else if(drag && sel.canMove()){
+									model.getSelectedItem().move(modelPoint);
 								}
-								
-							} catch (Exception e) {
-								// OK something went wrong... we're not going to stop everything for such a small thing, are we ?
-								e.printStackTrace();
+								synchronized (model) {
+									model.lighter.beams.clear();
+									model.lighter.lightmap.clear();
+								}
+							}
+							model.tick();
+
+							double elpasedTime = System.currentTimeMillis()-lastRepaint;
+							if(elpasedTime > 1000/fps){
+								view.repaint();
+								lastRepaint = System.currentTimeMillis();
 							}
 							if (stop)
 								break;

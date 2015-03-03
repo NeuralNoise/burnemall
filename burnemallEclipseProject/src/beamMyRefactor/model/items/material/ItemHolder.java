@@ -104,12 +104,12 @@ public class ItemHolder extends AbstractPhotosensitive {
 	}
 	
 	@Override
-	public Collection<Beam> produceBeam() {
+	public Collection<Beam> produceAllBeams() {
 		ArrayList<Beam> res = new ArrayList<>();
 		for(AbstractItem i : items)
 			if(i instanceof AbstractPhotosensitive){
 				AbstractPhotosensitive ph = (AbstractPhotosensitive)i;
-				res.addAll(ph.produceBeam());
+				res.addAll(ph.produceAllBeams());
 			}
 		return res;
 	}

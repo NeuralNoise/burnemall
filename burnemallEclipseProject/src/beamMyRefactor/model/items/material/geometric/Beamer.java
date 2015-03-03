@@ -19,6 +19,7 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import collections.MyArrayList;
 import beamMyRefactor.model.MyColor;
 import beamMyRefactor.model.items.material.AbstractPhotosensitive;
 import beamMyRefactor.model.lighting.Beam;
@@ -62,7 +63,7 @@ public class Beamer extends AbstractGeometry {
 	}
 
 	@Override
-	public Collection<Beam> produceBeam() {
+	public Collection<Beam> produceAllBeams() {
 		List<Beam> res = new ArrayList<Beam>();
 		if (nbRays==1) {
 			Beam b = new Beam(color, rayWidth);
@@ -78,6 +79,21 @@ public class Beamer extends AbstractGeometry {
 				start+=step;
 				res.add(b);				
 			}
+		}
+		return res;
+	}
+	
+	@Override
+	public Beam produceRandomBeam() {
+		Beam res;
+		if (nbRays==1) {
+			res = new Beam(color, rayWidth);
+			res.setRay (new Ray2D(coord, angle));
+		} else {
+			double randomAngle = angle+spread*MyRandom.between(-0.5, 0.5);
+			res = new Beam(color, rayWidth);
+			res.setRay (new Ray2D(coord, randomAngle));
+			res.setAsLight();
 		}
 		return res;
 	}

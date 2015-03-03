@@ -1,7 +1,9 @@
 package beamMyRefactor.model.lighting;
 
+import math.MyRandom;
 import tools.LogUtil;
 import geometry.Point2D;
+import geometry.Segment2D;
 import collections.Map2D;
 
 public class Lightmap extends Map2D<Double>{
@@ -38,7 +40,7 @@ public class Lightmap extends Map2D<Double>{
      * John Amanatides
      * Andrew Woo
      */
-	public void drawline(Point2D start, Point2D end, double intensity){
+	public void drawLine(Point2D start, Point2D end, double intensity){
 		// calculate the direction of the ray (linear algebra)
         double dirX = end.x-start.x;
         double dirY = end.y-start.y;
@@ -86,7 +88,8 @@ public class Lightmap extends Map2D<Double>{
             }
             if(!isInBounds(x, y))
             	return;
-            drawPoint(new Point2D(x, y), intensity);
+            Point2D p = new Point2D(x, y);
+            drawPoint(p, intensity-p.getDistance(start)*Beam.ATTENUATION);
 
             if(stepX > 0){
                 if (x >= endX)
@@ -101,7 +104,20 @@ public class Lightmap extends Map2D<Double>{
                 reachedY = true;
             i++;
         }
-        LogUtil.logger.info("nb pixels drawn : "+i);
+	}
+	
+	public void drawSegmentSamples(Segment2D s, double intensity){
+		Point2D p = s.getStart();
+		double length = s.getLength();
+		double angle = s.getAngle();
+		p = p.getTranslation(angle, MyRandom.between(0d, 20d));
+		do{
+			if(!isInBounds((int)p.x, (int)p.y))
+				break;
+			drawPoint(p, intensity-p.getDistance(s.getStart())*Beam.ATTENUATION);
+			p = p.getTranslation(angle, MyRandom.between(0, 20d));
+		} while(p.getDistance(s.getStart()) < length);
+
 	}
 	
 	@Override

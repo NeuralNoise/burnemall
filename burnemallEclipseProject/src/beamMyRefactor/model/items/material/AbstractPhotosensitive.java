@@ -24,8 +24,11 @@ public abstract class AbstractPhotosensitive extends AbstractItem {
 
 	public abstract Point2D intersect(Ray2D beam);
 	public abstract Collection<Beam> interact(Beam beam, Point2D intersect); 
-	public Collection<Beam> produceBeam() {
+	public Collection<Beam> produceAllBeams() {
 		return new ArrayList<>();
+	}
+	public Beam produceRandomBeam() {
+		return null;
 	}
 		
 }
