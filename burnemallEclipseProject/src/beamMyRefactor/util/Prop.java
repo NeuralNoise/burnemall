@@ -2,7 +2,7 @@ package beamMyRefactor.util;
 
 public class Prop {
 
-	public static int PANEL_WIDTH = 800;
-	public static int PANEL_HEIGHT = 600;
+	public static int PANEL_WIDTH = 500;
+	public static int PANEL_HEIGHT = 500;
 	
 }

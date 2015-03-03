@@ -31,10 +31,10 @@ public class Diffusor extends AbstractGeometry {
 	public Collection<Beam> interact(Beam beam, Point2D intersect) {
 		ArrayList<Beam> res = new ArrayList<>();
 		double angle = collisionNormal + Angle.RIGHT;
-		for(int i = 0; i<DIFFUSION_COUNT; i++){
-			angle -= Angle.FLAT*0.9/DIFFUSION_COUNT;
+		for(int i = 0; i<=DIFFUSION_COUNT; i++){
+			angle -= Angle.FLAT*0.99/DIFFUSION_COUNT;
 			Beam b = new Beam(beam);
-			b.intensity = b.intensity-0.5;
+			b.intensity = beam.intensity*0.5;
 			b.setRay(new Ray2D(intersect, angle));
 			res.add(b);
 		}

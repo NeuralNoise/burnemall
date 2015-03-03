@@ -16,6 +16,7 @@ import beamMyRefactor.model.items.material.geometric.Mirror;
 import beamMyRefactor.view.ViewPanel;
 
 public class Controller implements MouseListener, MouseMotionListener {
+	private static final double DEFAULT_FPS = 25;
 
 	private enum Action {NONE, CLICK, RCLICK};
 	
@@ -26,7 +27,11 @@ public class Controller implements MouseListener, MouseMotionListener {
 	boolean drag = false;
 	long pressionTime;
 	double angle;
+
 	
+	long lastRepaint;
+	double fps = DEFAULT_FPS;
+
 		
 	Action action = Action.NONE;
 	
@@ -55,7 +60,13 @@ public class Controller implements MouseListener, MouseMotionListener {
 											sel.canMove())
 										model.getSelectedItem().move(modelPoint);
 								model.tick();
-								view.repaint();
+
+								double elpasedTime = System.currentTimeMillis()-lastRepaint;
+								if(elpasedTime > 1000/fps){
+									view.repaint();
+									lastRepaint = System.currentTimeMillis();
+								}
+								
 							} catch (Exception e) {
 								// OK something went wrong... we're not going to stop everything for such a small thing, are we ?
 								e.printStackTrace();

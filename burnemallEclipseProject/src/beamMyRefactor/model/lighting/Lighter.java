@@ -86,16 +86,18 @@ public class Lighter {
 	}
 	
 	public void enlightMap(Beam beam){
-		Point2D p = beam.ray.getStart();
-		double beamlength = beam.getSegment().getLength();
-		int i = 1;
-		while(p.getDistance(beam.ray.getStart()) < beamlength){
-			lightmap.drawCircle(p, i, beam.intensity);
-			p = p.getTranslation(beam.ray.getAngle(), i);
-			i++;
-			if(!lightmap.isInBounds((int)p.x, (int)p.y))
-				break;
-		}
+//		Point2D p = beam.ray.getStart();
+//		double beamlength = beam.getSegment().getLength();
+//		int i = 3;
+//		while(p.getDistance(beam.ray.getStart()) < beamlength){
+//			lightmap.drawCircle(p, i, beam.intensity);
+//			p = p.getTranslation(beam.ray.getAngle(), i);
+////			i++;
+//			if(!lightmap.isInBounds((int)p.x, (int)p.y))
+//				break;
+//		}
+		
+		lightmap.drawline(beam.ray.getStart(), beam.ray.getPointAt(1000), beam.intensity);
 		
 	}
 }

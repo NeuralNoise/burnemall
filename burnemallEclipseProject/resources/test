@@ -1,37 +1,84 @@
 <model>
    <itemPool>
-      <allItems class="java.util.ArrayList">
-         <abstractItem class="beamMyRefactor.model.items.material.geometric.Beamer" nbRays="100">
-            <angle>0.0</angle>
-            <color>
-               <red>99</red>
-               <green>202</green>
-               <blue>235</blue>
-            </color>
-            <rayWidth>1</rayWidth>
-            <spread>0.17453292519943295</spread>
+      <XMLItems class="java.util.ArrayList">
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>-3.122364254490086</angle>
             <XMLCoord class="java.util.ArrayList">
-               <double>100.5</double>
-               <double>122.5</double>
+               <double>177.0</double>
+               <double>106.0</double>
             </XMLCoord>
          </abstractItem>
-         <abstractItem class="beamMyRefactor.model.items.material.circular.Goal">
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
             <angle>0.0</angle>
-            <radius>5.0</radius>
             <XMLCoord class="java.util.ArrayList">
-               <double>326.0</double>
-               <double>110.5</double>
+               <double>104.0</double>
+               <double>67.0</double>
             </XMLCoord>
          </abstractItem>
-         <abstractItem class="beamMyRefactor.model.items.material.circular.Randomizer">
-            <angle>0.0</angle>
-            <radius>5.0</radius>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>1.531980880713433</angle>
             <XMLCoord class="java.util.ArrayList">
-               <double>236.0</double>
+               <double>221.0</double>
+               <double>28.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>1.5578100438747242</angle>
+            <XMLCoord class="java.util.ArrayList">
+               <double>142.0</double>
+               <double>30.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>0.0</angle>
+            <XMLCoord class="java.util.ArrayList">
+               <double>105.0</double>
+               <double>139.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>0.0</angle>
+            <XMLCoord class="java.util.ArrayList">
+               <double>176.0</double>
+               <double>178.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>0.0</angle>
+            <XMLCoord class="java.util.ArrayList">
+               <double>176.0</double>
+               <double>253.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>0.0</angle>
+            <XMLCoord class="java.util.ArrayList">
                <double>108.0</double>
+               <double>287.0</double>
             </XMLCoord>
          </abstractItem>
-      </allItems>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>0.0</angle>
+            <XMLCoord class="java.util.ArrayList">
+               <double>109.0</double>
+               <double>325.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>1.559560844536934</angle>
+            <XMLCoord class="java.util.ArrayList">
+               <double>149.0</double>
+               <double>363.0</double>
+            </XMLCoord>
+         </abstractItem>
+         <abstractItem class="beamMyRefactor.model.items.material.geometric.Wall">
+            <angle>1.5707963267948966</angle>
+            <XMLCoord class="java.util.ArrayList">
+               <double>222.0</double>
+               <double>362.0</double>
+            </XMLCoord>
+         </abstractItem>
+      </XMLItems>
    </itemPool>
    <wave>
       <sootballs class="java.util.ArrayList"/>

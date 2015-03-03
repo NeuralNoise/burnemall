@@ -103,8 +103,10 @@ public class ViewPanel extends JPanel {
 	        g.setComposite(transp);
 	        for(int x=0; x<model.lighter.lightmap.xSize(); x++)
 	        	for(int y=0; y<model.lighter.lightmap.ySize(); y++){
-	        		g.setColor(new Color(1f, 1f, 1f, model.lighter.lightmap.get(x, y).floatValue()));
-	        		draw(g, new Point2D(x, y));
+	        		if(model.lighter.lightmap.get(x, y) != 0){
+		        		g.setColor(new Color(1f, 1f, 1f, model.lighter.lightmap.get(x, y).floatValue()));
+		        		draw(g, new Point2D(x, y));
+	        		}
 	        	}
 	    			
 	        g.setComposite(opaque);
