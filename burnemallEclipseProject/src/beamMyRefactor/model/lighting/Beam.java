@@ -1,5 +1,6 @@
 package beamMyRefactor.model.lighting;
 
+import tools.LogUtil;
 import math.MyRandom;
 import beamMyRefactor.model.MyColor;
 import geometry.Point2D;
@@ -9,7 +10,7 @@ import geometry.Segment2D;
 public class Beam {
 	private static final double FAR = 500.0;
 	private static final int MAX_INTERACT = 5;
-	public static final double ATTENUATION = 0.001; 
+	public static final double ATTENUATION = 0.002; 
 	public static final double MAX_LENGTH = 800; 
 	
 	Ray2D ray;
@@ -29,6 +30,7 @@ public class Beam {
 		spectralRate = beam.spectralRate;
 		interactions = beam.interactions+1;
 		intensity = beam.intensity-beam.getSegment().getLength()*ATTENUATION;
+		intensity = Math.max(0, intensity);
 		length = beam.length-beam.getSegment().getLength();
 	}
 

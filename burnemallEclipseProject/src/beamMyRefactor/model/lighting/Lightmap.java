@@ -30,9 +30,19 @@ public class Lightmap extends Map2D<Double>{
 	}
 	
 	public void drawPoint(Point2D p, double intensity){
-		if(get((int)p.x, (int)p.y)<intensity)
-			set((int)p.x, (int)p.y, Math.min(1, intensity));
-		
+//		if(get((int)p.x, (int)p.y)<intensity)
+//			set((int)p.x, (int)p.y, Math.min(1, intensity));
+		intensity /= 5;
+		int x = (int)p.x;
+		int y = (int)p.y;
+		double addedIntensity = get(x, y)+intensity;
+		addedIntensity = Math.min(1, addedIntensity); 
+		set(x, y, addedIntensity);
+	}
+	
+	@Override
+	public void set(int x, int y, Double value) {
+		super.set(x, y, value);
 	}
 	
     /*
@@ -89,8 +99,11 @@ public class Lightmap extends Map2D<Double>{
             if(!isInBounds(x, y))
             	return;
             Point2D p = new Point2D(x, y);
-            drawPoint(p, intensity-p.getDistance(start)*Beam.ATTENUATION);
-
+			double itAtPoint = intensity-p.getDistance(start)*Beam.ATTENUATION;
+			if(itAtPoint <= 0)
+				return;
+			drawPoint(p, itAtPoint);
+            
             if(stepX > 0){
                 if (x >= endX)
                     reachedX = true;
@@ -110,13 +123,16 @@ public class Lightmap extends Map2D<Double>{
 		Point2D p = s.getStart();
 		double length = s.getLength();
 		double angle = s.getAngle();
-		p = p.getTranslation(angle, MyRandom.between(0d, 20d));
-		do{
+		p = p.getTranslation(angle, MyRandom.between(0.1d, 20d));
+		while(p.getDistance(s.getStart()) <= length){
 			if(!isInBounds((int)p.x, (int)p.y))
 				break;
-			drawPoint(p, intensity-p.getDistance(s.getStart())*Beam.ATTENUATION);
+			double itAtPoint = intensity-p.getDistance(s.getStart())*Beam.ATTENUATION;
+			if(itAtPoint <= 0)
+				break;
+			drawPoint(p, itAtPoint);
 			p = p.getTranslation(angle, MyRandom.between(0, 20d));
-		} while(p.getDistance(s.getStart()) < length);
+		} 
 
 	}
 	

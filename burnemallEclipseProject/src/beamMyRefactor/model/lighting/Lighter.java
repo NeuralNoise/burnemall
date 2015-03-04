@@ -154,8 +154,8 @@ public class Lighter {
 
 
 		Segment2D s = beam.getSegment();
-		lightmap.drawLine(s.getStart(), s.getEnd(), beam.intensity);
-//		lightmap.drawSegmentSamples(s, beam.intensity);
+//		lightmap.drawLine(s.getStart(), s.getEnd(), beam.intensity);
+		lightmap.drawSegmentSamples(s, beam.intensity);
 		
 		
 		
