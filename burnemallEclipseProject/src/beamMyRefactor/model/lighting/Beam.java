@@ -10,7 +10,7 @@ import geometry.Segment2D;
 public class Beam {
 	private static final double FAR = 500.0;
 	private static final int MAX_INTERACT = 5;
-	public static final double ATTENUATION = 0.002; 
+	public static final double ATTENUATION = 0.001; 
 	public static final double MAX_LENGTH = 800; 
 	
 	Ray2D ray;

@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import tools.LogUtil;
-import beamMyRefactor.model.items.AbstractItem;
 import beamMyRefactor.model.items.ItemPool;
 import beamMyRefactor.model.items.material.AbstractPhotosensitive;
 import beamMyRefactor.util.Prop;

@@ -51,12 +51,10 @@ public class Controller implements MouseListener, MouseMotionListener {
 						while (true) {
 							AbstractItem sel = model.getSelectedItem();
 							if(action != Action.NONE && sel != null){
-								boolean toUpdate = false;
 								if(action == Action.RCLICK
 										&& sel.canRotate() &&
 										pressionTime+100 < System.currentTimeMillis()){
 									model.getSelectedItem().setAngle(angle);
-									toUpdate = true;
 								} else if(drag && sel.canMove()){
 									model.getSelectedItem().move(modelPoint);
 								}
@@ -65,11 +63,15 @@ public class Controller implements MouseListener, MouseMotionListener {
 									model.lighter.lightmap.clear();
 								}
 							}
-							model.tick();
+							synchronized (model){
+								model.tick();
+							}
 
 							double elpasedTime = System.currentTimeMillis()-lastRepaint;
 							if(elpasedTime > 1000/fps){
-								view.repaint();
+								synchronized (model) {
+									view.repaint();
+								}
 								lastRepaint = System.currentTimeMillis();
 							}
 							if (stop)

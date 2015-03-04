@@ -30,6 +30,7 @@ import beamMyRefactor.model.items.material.circular.Sootball;
 import beamMyRefactor.model.items.material.circular.Wormhole;
 import beamMyRefactor.model.items.material.geometric.Beamer;
 import beamMyRefactor.model.items.material.geometric.FacetedMirror;
+import beamMyRefactor.model.items.material.geometric.Lamp;
 import beamMyRefactor.model.items.material.geometric.Mirror;
 import beamMyRefactor.model.items.material.geometric.NegativeLens;
 import beamMyRefactor.model.items.material.geometric.PositiveLens;
@@ -100,9 +101,7 @@ public class EditController implements KeyListener {
 			switch(e.getKeyChar()){
 			case 'M' : i = new Mirror(modelPoint, 50, 0); break;
 			case 'B' : i = new Beamer(modelPoint, 0); break;
-			case 'V' : i = new Beamer(modelPoint, 0);
-				((Beamer)i).setAsLight(30, Angle.toRadians(360));
-				break;
+			case 'V' : i = new Lamp(modelPoint, 0); break;
 			case 'A' : i = new FacetedMirror(modelPoint,0); break;
 			case 'G' : i = new Goal(modelPoint); break;
 			case 'R' : i = new Randomizer(modelPoint); break;

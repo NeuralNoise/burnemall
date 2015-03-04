@@ -32,7 +32,7 @@ public class Lightmap extends Map2D<Double>{
 	public void drawPoint(Point2D p, double intensity){
 //		if(get((int)p.x, (int)p.y)<intensity)
 //			set((int)p.x, (int)p.y, Math.min(1, intensity));
-		intensity /= 5;
+		intensity /= 10;
 		int x = (int)p.x;
 		int y = (int)p.y;
 		double addedIntensity = get(x, y)+intensity;
@@ -42,7 +42,10 @@ public class Lightmap extends Map2D<Double>{
 	
 	@Override
 	public void set(int x, int y, Double value) {
+		if(value > 1 || value < 0)
+			throw new RuntimeException("value needs to be betwwen 0 & 1 : "+value);
 		super.set(x, y, value);
+		
 	}
 	
     /*
@@ -123,7 +126,7 @@ public class Lightmap extends Map2D<Double>{
 		Point2D p = s.getStart();
 		double length = s.getLength();
 		double angle = s.getAngle();
-		p = p.getTranslation(angle, MyRandom.between(0.1d, 20d));
+		p = p.getTranslation(angle, MyRandom.between(0.1d, 10d));
 		while(p.getDistance(s.getStart()) <= length){
 			if(!isInBounds((int)p.x, (int)p.y))
 				break;
@@ -131,7 +134,7 @@ public class Lightmap extends Map2D<Double>{
 			if(itAtPoint <= 0)
 				break;
 			drawPoint(p, itAtPoint);
-			p = p.getTranslation(angle, MyRandom.between(0, 20d));
+			p = p.getTranslation(angle, MyRandom.between(0, 10d));
 		} 
 
 	}
@@ -140,6 +143,62 @@ public class Lightmap extends Map2D<Double>{
 	public void clear() {
 		setAll(0d);
 	}
+	
+	public Lightmap getBlurred(int radius){
+		return getHorBlur(radius).getVertBlur(radius);
+	}
+	private Lightmap getHorBlur(int radius) {
+		Lightmap res = new Lightmap(xSize, ySize);
+        for(int y=0; y<ySize; y++) {
+            for(int x=0; x<xSize; x++) {
+                int total = 0;
+                for(int kx=-radius; kx<=radius; kx++)
+                    total += get(x + kx, y);
+                res.set(x, y, (double)total/(radius * 2 + 1));
+            }
+        }
+        return res;
+//        for(int y=0; y<ySize; y++) {
+//            int total = 0;
+//            for(int kx=-radius; kx<=radius; kx++)
+//                total += get(kx, y);
+//            dest.set(0, y, (double)total/(radius*2+1));
+//
+//            // Subsequent pixels just update window total
+//            for (int x=1; x<xSize; x++) {
+//                // Subtract pixel leaving window
+//                total -= get(x-radius-1, y);
+//                
+//                // Add pixel entering window
+//                total += get(x+radius, y);
+//
+//                if(total<0)
+//                    dest.set(x, y, 0d);
+//                else
+//                	dest.set(x, y, (double)total/(radius*2+1));
+//            }
+//        }
+    }
+	private Lightmap getVertBlur(int radius) {
+		Lightmap res = new Lightmap(xSize, ySize);
+        for(int x=0; x<xSize; x++) {
+            for(int y=0; y<ySize; y++) {
+                int total = 0;
+                for(int ky=-radius; ky<=radius; ky++)
+                    total += get(x, y+ky);
+                res.set(x, y, (double)total/(radius * 2 + 1));
+            }
+        }
+        return res;
+    }
+	
+	@Override
+	public Double get(int x, int y) {
+		if(!isInBounds(x, y))
+			return 0d;
+		return super.get(x, y);
+	}
+	
 	
 	
 	

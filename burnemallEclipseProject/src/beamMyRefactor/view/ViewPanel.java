@@ -26,6 +26,7 @@ import tools.LogUtil;
 import beamMyRefactor.model.Model;
 import beamMyRefactor.model.items.AbstractItem;
 import beamMyRefactor.model.lighting.Beam;
+import beamMyRefactor.model.lighting.Lightmap;
 import beamMyRefactor.util.Prop;
 import beamMyRefactor.util.Recorder;
 import beamMyRefactor.util.StopWatch;
@@ -101,11 +102,12 @@ public class ViewPanel extends JPanel {
 //			}
 	        
 //	        g.setComposite(transp);
-			g.setComposite(opaque);	
-	        for(int x=0; x<model.lighter.lightmap.xSize(); x++)
-	        	for(int y=0; y<model.lighter.lightmap.ySize(); y++){
-	        		if(model.lighter.lightmap.get(x, y) != 0){
-	        			float it = model.lighter.lightmap.get(x, y).floatValue();
+			g.setComposite(opaque);
+			Lightmap blurred = model.lighter.lightmap;//.getBlurred(10);
+	        for(int x=0; x<blurred.xSize(); x++)
+	        	for(int y=0; y<blurred.ySize(); y++){
+	        		if(blurred.get(x, y) != 0){
+	        			float it = blurred.get(x, y).floatValue();
 		        		g.setColor(new Color(it, it, it, 1f));
 		        		draw(g, new Point2D(x, y));
 	        		}
